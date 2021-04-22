@@ -65,6 +65,7 @@ window.sidebar-panel {
 .tabbrowser-tab {
     font-family: var(--custom-font);
     font-size: 12px !important;
+    font-weight: 500;
 }
 
 .tab-content {
