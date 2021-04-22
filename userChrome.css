@@ -40,6 +40,8 @@ window.sidebar-panel {
   padding-right: 8px !important;
 }
 .titlebar-spacer { width: 4px !important;}
+.toolbarbutton-1 { padding: 0 !important; }
+
 /* URL */
 #urlbar-container, #urlbar-input #urlbar-input-container {
   font-size: 12px !important;
