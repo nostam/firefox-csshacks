@@ -50,7 +50,7 @@ window.sidebar-panel {
   font-weight: 500 !important;
   padding: 0 !important;
 }
-.tab-icon-image, #back-button, #forward-button,
+#back-button, #forward-button,
 #tracking-protection-icon-box, #identity-icon,
 .blocked-permission-icon.autoplay-media-icon {
   display: none !important;
@@ -70,15 +70,18 @@ window.sidebar-panel {
   padding-left: 4px !important;
   padding-right: 4px !important;}
 
-.tab-label-container { margin-left: -8px !important;}
+.tab-content[type="soundplaying"] .tab-label-container { margin-left: -8px !important;}
+.tab-icon-stack .tab-icon-image { opacity: 1 !important; }
+/* .tab-icon-overlay, .tab-icon-stack .tab-icon-image { transform: scale(0.9) !important; } */
+.tab-content[type="soundplaying"] .tab-icon-image {opacity: 0 !important;}
 /* fix audio icon is hidden when playing audio */
 .tab-icon-overlay {
   opacity: 1 !important;
+  left: 6px !important;
+  bottom: 6px !important;
   fill-opacity: 1 !important;
 }
-.tab-icon-stack .tab-icon-image {
-  opacity: 1 !important;
-}
+
 
 /* progress bar on tab */
 .tab-throbber {
