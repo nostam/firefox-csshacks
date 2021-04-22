@@ -5,14 +5,12 @@
 @import url(chrome/navbar_tabs_responsive_oneliner.css);
 @import url(chrome/compact_proton.css);
 @import url(chrome/tab_close_button_always_on_hover.css);
-@import url(chrome/tab_loading_progress_throbber.css);
 @import url(chrome/blank_page_background.css);
 @import url(chrome/autohide_menubar.css);
 @import url(chrome/hide_toolbox_top_bottom_borders.css);
 @import url(chrome/minimal_popup_scrollbars.css);
-@import url(chrome/dark_context_menus.css);
 @import url(chrome/dark_additional_windows.css);
-@import url(chrome/dark_checkboxes_and_radios.css);
+@import url(content/compact_addons_manager.css);
 
 /* Apply your custom modifications after imports */
 
@@ -23,6 +21,7 @@
   --autocomplete-popup-background: var(--toolbar-bgcolor) !important;
   --uc-menu-disabled: rgb(90, 90, 90) !important;
   --lwt-toolbar-field-focus: rgb(36, 44, 59) !important;
+  --custom-font: "Noto Sans CJK JP", "Noto Sans CJK TC" !important;
 }
 
 #sidebar-box {
@@ -37,6 +36,66 @@ window.sidebar-panel {
   padding-left: 8px !important;
   padding-right: 8px !important;
 }
-.titlebar-spacer {
-  width: 4px !important;
+
+/* reduce spacer */
+.titlebar-spacer { width: 4px !important; }
+
+/* hide fav icons */
+.tab-icon-image { display: none !important; }
+
+/* URL */
+#urlbar-container, #urlbar-input #urlbar-input-container {
+  font-size: 12px !important;
+  margin: 0 !important;
+  font-family: var(--custom-font) !important;
+  text-shadow: none !important;
+  text-align: left !important;
+  /* background: var(--toolbar-bgcolor) !important; */
+  font-weight: 500 !important;
+  padding: 0 !important;
+}
+
+/* Tabs */
+.tabbrowser-tab {
+    font-family: var(--custom-font);
+    font-size: 12px !important;
+}
+
+/* progress bar on tab */
+.tab-throbber {
+  display: none !important;
+}
+.tab-loading-burst[bursting]::before {
+  background-image: none !important;
+  animation: unset !important;
+}
+/* 0, 138, 251 this sets the color of the line above the tab */
+.tab-line[selected="true"] {
+  background-color: rgba(246, 224, 1, 0.9) !important;
+}
+.tabbrowser-tab .tab-loading-burst {
+  background-image: linear-gradient(
+    90deg,
+    rgba(170, 5, 177, 0.88),
+    #be0575
+  ) !important;
+  background-repeat: no-repeat !important;
+  transition: background-size 0.75s ease-out opacity 0.5s linear !important;
+  background-size: 0px 3px !important;
+  background-position-y: top;
+}
+.tabbrowser-tab:not([busy]) .tab-loading-burst {
+  opacity: 0;
+}
+.tabbrowser-tab[busy] .tab-loading-burst {
+  background-size: 20% 3px !important;
+  transition: background-size 0.5s ease-out;
+}
+.tabbrowser-tab[busy][progress] .tab-loading-burst {
+  background-size: 100% 3px !important;
+  transition-duration: 3s !important;
+}
+.tabbrowser-tab[bursting] .tab-loading-burst {
+  background-size: 100% 3px !important;
+  transition-duration: 0.75s;
 }

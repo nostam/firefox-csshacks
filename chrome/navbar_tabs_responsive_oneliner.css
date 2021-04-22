@@ -27,7 +27,8 @@ See the above repository for updates as well as full license text. */
   }
 
   /* Override for other densities */
-  :root[uidensity="compact"] #navigator-toolbox{ --uc-toolbar-height: 34px; }
+  /* 34 w/o minimal css*/
+  :root[uidensity="compact"] #navigator-toolbox{ --uc-toolbar-height: 30px; }
   :root[uidensity="touch"] #navigator-toolbox{ --uc-toolbar-height: 44px; }
 
   #TabsToolbar{
