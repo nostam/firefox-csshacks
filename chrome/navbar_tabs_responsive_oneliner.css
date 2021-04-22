@@ -18,7 +18,7 @@ See the above repository for updates as well as full license text. */
   #navigator-toolbox{
     --uc-navigationbar-width: 25vw;
     --uc-toolbar-height: 40px;
-    --uc-urlbar-min-width: 90vw; /* Can set minimum width for focused urlbar here eg. 550px */
+    --uc-urlbar-min-width: 50vw; /* Can set minimum width for focused urlbar here eg. 550px */
   }
 /* prevent urlbar overflow on narrow windows */
 /* Dependent on how many items are in navigation toolbar ADJUST AS NEEDED */
@@ -27,7 +27,7 @@ See the above repository for updates as well as full license text. */
   }
 
   /* Override for other densities */
-  /* 34 w/o minimal css*/
+  /* 34 w/o custom css*/
   :root[uidensity="compact"] #navigator-toolbox{ --uc-toolbar-height: 30px; }
   :root[uidensity="touch"] #navigator-toolbox{ --uc-toolbar-height: 44px; }
 
@@ -62,10 +62,10 @@ See the above repository for updates as well as full license text. */
   /* Hide dropdown placeholder */
   #urlbar-container:not(:hover) .urlbar-history-dropmarker{ margin-inline-start: -28px; }
   #urlbar-container:not(:focus) {
-    min-width: calc(var(--uc-navigationbar-width) *0.5) !important;
+    min-width: calc(var(--uc-navigationbar-width) *0.65) !important;
   }
   #urlbar:focus-within, #urlbar-container:focus-within{ min-width: var(--uc-urlbar-min-width,none) !important; }
-
+  .chr
   /* hide overflow indicator' separators*/
   spacer[part="overflow-start-indicator"],
   spacer[part="overflow-end-indicator"] {

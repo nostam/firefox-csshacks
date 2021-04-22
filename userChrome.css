@@ -5,6 +5,7 @@
 @import url(chrome/navbar_tabs_responsive_oneliner.css);
 @import url(chrome/compact_proton.css);
 @import url(chrome/tab_close_button_always_on_hover.css);
+@import url(chrome/hide_urlbar_first_row.css);
 @import url(chrome/blank_page_background.css);
 @import url(chrome/autohide_menubar.css);
 @import url(chrome/hide_toolbox_top_bottom_borders.css);
@@ -40,8 +41,8 @@ window.sidebar-panel {
 /* reduce spacer */
 .titlebar-spacer { width: 4px !important; }
 
-/* hide fav icons */
-.tab-icon-image { display: none !important; }
+/* hide icons */
+.tab-icon-image, #back-button, #forward-button, .titlebar-spacer[type="post-tabs"]  { display: none !important; }
 
 /* URL */
 #urlbar-container, #urlbar-input #urlbar-input-container {
@@ -56,6 +57,7 @@ window.sidebar-panel {
 }
 
 /* Tabs */
+#TabsToolbar {height: 30px !important;}
 .tabbrowser-tab {
     font-family: var(--custom-font);
     font-size: 12px !important;
