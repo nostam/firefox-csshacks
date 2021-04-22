@@ -12,7 +12,7 @@
 @import url(chrome/minimal_popup_scrollbars.css);
 @import url(chrome/dark_additional_windows.css);
 @import url(content/compact_addons_manager.css);
-/* @import url(chrome/urlbar_results_in_two_rows.css); */
+@import url(chrome/urlbar_results_in_two_rows.css);
 
 /* Apply your custom modifications after imports */
 
