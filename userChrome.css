@@ -87,7 +87,7 @@ window.sidebar-panel {
 
 
 .tabbrowser-tab[visuallyselected="true"] > .tab-stack > .tab-background {
-	box-shadow: 0 !important;
+	box-shadow: none !important;
 }
 
 /* progress bar on tab */
