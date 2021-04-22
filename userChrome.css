@@ -12,6 +12,7 @@
 @import url(chrome/minimal_popup_scrollbars.css);
 @import url(chrome/dark_additional_windows.css);
 @import url(content/compact_addons_manager.css);
+/* @import url(chrome/urlbar_results_in_two_rows.css); */
 
 /* Apply your custom modifications after imports */
 
@@ -37,13 +38,7 @@ window.sidebar-panel {
   padding-left: 8px !important;
   padding-right: 8px !important;
 }
-
-/* reduce spacer */
-.titlebar-spacer { width: 4px !important; }
-
-/* hide icons */
-.tab-icon-image, #back-button, #forward-button, .titlebar-spacer[type="post-tabs"]  { display: none !important; }
-
+.titlebar-spacer { width: 4px !important;}
 /* URL */
 #urlbar-container, #urlbar-input #urlbar-input-container {
   font-size: 12px !important;
@@ -55,12 +50,34 @@ window.sidebar-panel {
   font-weight: 500 !important;
   padding: 0 !important;
 }
+.tab-icon-image, #back-button, #forward-button,
+#tracking-protection-icon-box, #identity-icon,
+.blocked-permission-icon.autoplay-media-icon {
+  display: none !important;
+}
+#tracking-protection-icon-container {
+  padding: 2px !important;
+}
 
 /* Tabs */
 #TabsToolbar {height: 30px !important;}
 .tabbrowser-tab {
     font-family: var(--custom-font);
     font-size: 12px !important;
+}
+
+.tab-content {
+  padding-left: 4px !important;
+  padding-right: 4px !important;}
+
+.tab-label-container { margin-left: -8px !important;}
+/* fix audio icon is hidden when playing audio */
+.tab-icon-overlay {
+  opacity: 1 !important;
+  fill-opacity: 1 !important;
+}
+.tab-icon-stack .tab-icon-image {
+  opacity: 1 !important;
 }
 
 /* progress bar on tab */
@@ -72,9 +89,9 @@ window.sidebar-panel {
   animation: unset !important;
 }
 /* 0, 138, 251 this sets the color of the line above the tab */
-.tab-line[selected="true"] {
+/* .tab[selected="true"] {
   background-color: rgba(246, 224, 1, 0.9) !important;
-}
+} */
 .tabbrowser-tab .tab-loading-burst {
   background-image: linear-gradient(
     90deg,
