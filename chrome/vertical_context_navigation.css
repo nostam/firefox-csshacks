@@ -7,7 +7,7 @@ See the above repository for updates as well as full license text. */
 #contentAreaContextMenu{ --uc-popup-display: grid; --uc-pseudo-elem: "" }
 scrollbox[orient="vertical"]{
   display: var(--uc-popup-display,inherit);
-  grid-template-columns: 38px 1fr; 
+  grid-template-columns: 38px 1fr;
   grid-template-rows: 0
 }
 
