@@ -64,8 +64,14 @@ See the above repository for updates as well as full license text. */
   #urlbar-container:not(:focus) {
     min-width: calc(var(--uc-navigationbar-width) *0.65) !important;
   }
-  #urlbar:focus-within, #urlbar-container:focus-within{ min-width: var(--uc-urlbar-min-width,none) !important; }
-  .chr
+  /* using urlbar-container will push PanelUI-button and menu arrow outward */
+  /* when window is maximized, pageproxystate is valid and url text will overflow over toolbar-icons */
+  #urlbar:focus-within[pageproxystate="invalid"] { min-width: var(--uc-urlbar-min-width,none) !important; }
+  /* overlay when urlbar is focused */
+  #nav-bar-customization-target, #PanelUI-button, #nav-bar-overflow-button, #TabsToolbar > .toolbar-items {
+    z-index: unset !important;
+  }
+
   /* hide overflow indicator' separators*/
   spacer[part="overflow-start-indicator"],
   spacer[part="overflow-end-indicator"] {
