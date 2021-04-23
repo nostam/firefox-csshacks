@@ -1,0 +1,7 @@
+/* fix audio icon is hidden when playing audio */
+.tab-icon-overlay {
+	opacity: 1 !important;
+	left: 6px !important;
+	bottom: 6px !important;
+	fill-opacity: 1 !important;
+}
