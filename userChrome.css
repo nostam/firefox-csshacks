@@ -18,11 +18,11 @@
 
 :root {
   --toolbar-bgcolor: rgb(36, 44, 59) !important;
-  --uc-menu-bkgnd: var(--toolbar-bgcolor);
+  /* --uc-menu-bkgnd: var(--toolbar-bgcolor);
   --arrowpanel-background: var(--toolbar-bgcolor) !important;
   --autocomplete-popup-background: var(--toolbar-bgcolor) !important;
   --uc-menu-disabled: rgb(90, 90, 90) !important;
-  --lwt-toolbar-field-focus: rgb(36, 44, 59) !important;
+  --lwt-toolbar-field-focus: rgb(36, 44, 59) !important; */
   --custom-font: "Noto Sans CJK JP", "Noto Sans CJK TC" !important;
   --custom-accent: #2b2550;
 }
@@ -114,6 +114,7 @@ window.sidebar-panel {
   transition: background-size 0.75s ease-out opacity 0.5s linear !important;
   background-size: 0px 3px !important;
   background-position-y: top;
+  margin-left: 4px;
 }
 .tabbrowser-tab:not([busy]) .tab-loading-burst {
   opacity: 0;
