@@ -60,9 +60,6 @@ window.sidebar-panel {
     font-size: 12px !important;
     font-weight: 500;
 }
-.tabbrowser-tab[visuallyselected="true"] > .tab-stack > .tab-background {
-	box-shadow: none !important;
-}
 .tab-content {
   padding-left: 4px !important;
   padding-right: 4px !important;}
@@ -74,6 +71,7 @@ window.sidebar-panel {
 .tabbrowser-tab[visuallyselected] > .tab-stack > .tab-background {
 	box-shadow: none !important;
   background-color: var(--custom-accent-drk) !important;
+  background-image: none !important;
 }
 
 .tab-throbber[busy] { color: var(--custom-accent-lwt) !important; }
