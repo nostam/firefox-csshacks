@@ -6,7 +6,6 @@
 @import url(chrome/compact_proton.css);
 @import url(chrome/tab_close_button_always_on_hover.css);
 @import url(chrome/hide_urlbar_first_row.css);
-@import url(chrome/blank_page_background.css);
 @import url(chrome/hide_toolbox_top_bottom_borders.css);
 @import url(chrome/minimal_popup_scrollbars.css);
 @import url(chrome/dark_additional_windows.css);
@@ -20,7 +19,8 @@
 :root {
   --toolbar-bgcolor: rgb(36, 44, 59) !important;
   --custom-font: "Noto Sans CJK JP", "Noto Sans CJK TC" !important;
-  --custom-accent: #2b2550;
+  --custom-accent-drk: #2b2550;
+  --custom-accent-lwt: rgba(246, 224, 1, 1);
 }
 
 #sidebar-box {
@@ -51,9 +51,7 @@ window.sidebar-panel {
 .blocked-permission-icon.autoplay-media-icon {
   display: none !important;
 }
-#tracking-protection-icon-container {
-  padding: 2px !important;
-}
+#tracking-protection-icon-container { padding: 2px !important; }
 #urlbar:focus-within[pageproxystate="invalid"] { box-shadow: 0 0 0 1px black;}
 
 /* Tabs */
@@ -69,19 +67,20 @@ window.sidebar-panel {
   padding-left: 4px !important;
   padding-right: 4px !important;}
 
-.tab-content[type="soundplaying"] .tab-label-container { margin-left: -8px !important;}
+.tab-content[soundplaying] .tab-label-container { margin-left: -8px !important;}
 .tab-icon-stack .tab-icon-image { opacity: 1 !important; }
 /* .tab-icon-overlay, .tab-icon-stack .tab-icon-image { transform: scale(0.9) !important; } */
-.tab-content[type="soundplaying"] .tab-icon-image {opacity: 0 !important;}
-.tabbrowser-tab[visuallyselected="true"] > .tab-stack > .tab-background {
+.tab-content[soundplaying] .tab-icon-image { opacity: 0 !important; }
+.tabbrowser-tab[visuallyselected] > .tab-stack > .tab-background {
 	box-shadow: none !important;
+  background-color: var(--custom-accent-drk) !important;
 }
+
+.tab-throbber[busy] { color: var(--custom-accent-lwt) !important; }
+
 /* hide overflow indicator' separators*/
-spacer[part="overflow-start-indicator"],
-spacer[part="overflow-end-indicator"] {
-  border-image: linear-gradient(
-    black,
-    black calc(100% - 1px - var(--tabs-navbar-shadow-size)),
-    transparent calc(100% - 1px - var(--tabs-navbar-shadow-size))
-  ) !important;
-}
+spacer[part="overflow-start-indicator"], spacer[part="overflow-end-indicator"] { display: none !important; }
+
+/* fix for toolbar smaller than 34px */
+#scrollbutton-up,#scrollbutton-down { padding-top: 0 !important; padding-bottom: 0 !important;}
+

@@ -30,7 +30,7 @@ See the above repository for updates as well as full license text. */
   }
 
   /* Override for other densities */
-  :root[uidensity="compact"] #navigator-toolbox{ --uc-toolbar-height: 30px; }
+  :root[uidensity="compact"] #navigator-toolbox{ --uc-toolbar-height: 28px; }
   :root[uidensity="touch"] #navigator-toolbox{ --uc-toolbar-height: 44px; }
 
   #TabsToolbar{
@@ -67,8 +67,8 @@ See the above repository for updates as well as full license text. */
   /* Hide dropdown placeholder */
   #urlbar-container:not(:hover) .urlbar-history-dropmarker{ margin-inline-start: -28px; }
 
-  /* show two addons icons + arrow menu instead of one*/
-  #urlbar-container:not(:focus) { min-width: calc(var(--uc-navigationbar-width) *0.7) !important; }
+  /* show two addons icons + overflow menu instead of only overflow menu*/
+  #urlbar-container:not(:focus) { min-width: calc(var(--uc-navigationbar-width) - 150px) !important; }
 }
 /* Fix customization view */
 #customization-panelWrapper > .panel-arrowbox > .panel-arrow{ margin-inline-end: initial !important; }
