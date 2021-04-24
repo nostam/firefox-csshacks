@@ -61,8 +61,9 @@ window.sidebar-panel {
     font-weight: 500;
 }
 .tab-content {
-  padding-left: 4px !important;
-  padding-right: 4px !important;}
+  padding-left: 6px !important;
+  padding-right: 6px !important;
+}
 
 .tab-content[soundplaying] .tab-label-container { margin-left: -8px !important;}
 .tab-icon-stack .tab-icon-image { opacity: 1 !important; }

@@ -30,7 +30,7 @@ See the above repository for updates as well as full license text. */
   }
 
   /* Override for other densities */
-  :root[uidensity="compact"] #navigator-toolbox{ --uc-toolbar-height: 28px; }
+  :root[uidensity="compact"] #navigator-toolbox{ --uc-toolbar-height: 30px; }
   :root[uidensity="touch"] #navigator-toolbox{ --uc-toolbar-height: 44px; }
 
   #TabsToolbar{
