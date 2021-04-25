@@ -13,7 +13,7 @@
 @import url(chrome/urlbar_results_in_two_rows.css);
 
 @import url(custom/audio_icon_overlay_on_favicon.css);
-
+@import url(custom/pre_proton_tabs.css);
 /* Apply your custom modifications after imports */
 
 :root {
@@ -67,12 +67,12 @@ window.sidebar-panel {
 
 .tab-content[soundplaying] .tab-label-container { margin-left: -8px !important;}
 .tab-icon-stack .tab-icon-image { opacity: 1 !important; }
-/* .tab-icon-overlay, .tab-icon-stack .tab-icon-image { transform: scale(0.9) !important; } */
+
 .tab-content[soundplaying] .tab-icon-image { opacity: 0 !important; }
 .tabbrowser-tab[visuallyselected] > .tab-stack > .tab-background {
 	box-shadow: none !important;
-  background-color: var(--custom-accent-drk) !important;
-  background-image: none !important;
+  /* background-color: var(--custom-accent-drk) !important;
+  background-image: none !important; */
 }
 
 .tab-throbber[busy] { color: var(--custom-accent-lwt) !important; }
@@ -82,4 +82,3 @@ spacer[part="overflow-start-indicator"], spacer[part="overflow-end-indicator"] {
 
 /* fix for toolbar smaller than 34px */
 #scrollbutton-up,#scrollbutton-down { padding-top: 0 !important; padding-bottom: 0 !important;}
-
