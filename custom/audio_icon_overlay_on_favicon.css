@@ -1,7 +1,11 @@
 /* fix audio icon is hidden when playing audio */
 .tab-icon-overlay {
 	opacity: 1 !important;
+	fill-opacity: 1 !important;
+	background-color: rgb(36, 44, 59) !important;
+}
+.tab-icon-overlay[muted] {
 	left: 6px !important;
 	bottom: 6px !important;
-	fill-opacity: 1 !important;
+	background-color: transparent !important;
 }
