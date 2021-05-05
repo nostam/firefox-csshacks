@@ -30,7 +30,7 @@ See the above repository for updates as well as full license text. */
   }
 
   /* Override for other densities */
-  :root[uidensity="compact"] #navigator-toolbox{ --uc-toolbar-height: 34px; }
+  :root[uidensity="compact"] #navigator-toolbox{ --uc-toolbar-height: 30px; }
   :root[uidensity="touch"] #navigator-toolbox{ --uc-toolbar-height: 44px; }
 
   #TabsToolbar{
@@ -50,7 +50,7 @@ See the above repository for updates as well as full license text. */
   }
 
   /* Window drag space  */
-  :root[tabsintitlebar="true"] #nav-bar{ padding-left: 24px !important }
+  :root[tabsintitlebar="true"] #nav-bar{ padding-left: 4px !important }
 
 /* Rules specific to window controls on right layout */
   @supports -moz-bool-pref("layout.css.osx-font-smoothing.enabled"){
@@ -67,6 +67,8 @@ See the above repository for updates as well as full license text. */
   /* Hide dropdown placeholder */
   #urlbar-container:not(:hover) .urlbar-history-dropmarker{ margin-inline-start: -28px; }
 
+  /* show two addons icons + overflow menu instead of only overflow menu*/
+  #urlbar-container:not(:focus) { min-width: calc(var(--uc-navigationbar-width) - 150px) !important; }
 }
 /* Fix customization view */
 #customization-panelWrapper > .panel-arrowbox > .panel-arrow{ margin-inline-end: initial !important; }

@@ -1,0 +1,19 @@
+/* https://gist.github.com/Speedy37/63d37931601123178ac2221533292cdd */
+
+/* .tab-stack { margin-top: 4px; } */
+.tab-background {
+	margin: 0px !important;
+	border-bottom-left-radius: 0 !important;
+	border-bottom-right-radius: 0 !important;
+}
+.tab-background[selected="true"] {
+	background: linear-gradient(to bottom, rgb(64, 70, 168) 2px, var(--toolbar-bgcolor) 2px, var(--toolbar-bgcolor) 100%) !important;
+}
+.tab-context-line {
+	margin-top: 26px !important;
+	margin-left: 6px !important;
+	margin-right: 6px !important;
+}
+menupopup > menuitem, menupopup > menu { padding-block: 0.15em !important; }
+.tab-close-button  { display: none; }
+.panel-subview-body > * { padding: 2px 6px !important; }

@@ -1,0 +1,31 @@
+/* progress bar on tab */
+.tab-throbber { display: none !important; }
+.tab-loading-burst[bursting]::before {
+  background-image: none !important;
+  animation: unset !important;
+}
+.tabbrowser-tab .tab-loading-burst {
+  background-image: linear-gradient(
+    90deg,
+    rgba(170, 5, 177, 0.88),
+    #be0575
+  ) !important;
+  background-repeat: no-repeat !important;
+  transition: background-size 0.75s ease-out opacity 0.5s linear !important;
+  background-size: 0px 3px !important;
+  background-position-y: top;
+  margin-left: 4px;
+}
+.tabbrowser-tab:not([busy]) .tab-loading-burst { opacity: 0; }
+.tabbrowser-tab[busy] .tab-loading-burst {
+  background-size: 20% 3px !important;
+  transition: background-size 0.5s ease-out;
+}
+.tabbrowser-tab[busy][progress] .tab-loading-burst {
+  background-size: 100% 3px !important;
+  transition-duration: 3s !important;
+}
+.tabbrowser-tab[bursting] .tab-loading-burst {
+  background-size: 100% 3px !important;
+  transition-duration: 0.75s;
+}
