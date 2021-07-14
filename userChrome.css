@@ -35,48 +35,74 @@ window.sidebar-panel {
   padding-left: 8px !important;
   padding-right: 8px !important;
 }
-.titlebar-spacer { width: 4px !important;}
-.toolbarbutton-1 { padding: 0 !important; }
+.titlebar-spacer {
+  width: 4px !important;
+}
+.toolbarbutton-1 {
+  padding: 0 !important;
+}
 
 /* URL */
-#urlbar-container, #urlbar-input #urlbar-input-container {
+#urlbar-container,
+#urlbar-input #urlbar-input-container {
   font-size: 12px !important;
   font-family: var(--custom-font) !important;
   font-weight: 500 !important;
 }
-#back-button, #forward-button,
-#tracking-protection-icon-box, #identity-icon,
+#back-button,
+#forward-button,
+#tracking-protection-icon-box,
+#identity-icon,
 .blocked-permission-icon.autoplay-media-icon {
   display: none !important;
 }
-#tracking-protection-icon-container { padding: 2px !important; }
-#urlbar:focus-within[pageproxystate="invalid"] { box-shadow: 0 0 0 1px black;}
+#tracking-protection-icon-container {
+  padding: 2px !important;
+}
+#urlbar:focus-within[pageproxystate="invalid"] {
+  box-shadow: 0 0 0 1px black;
+}
 
 /* Tabs */
 .tabbrowser-tab {
-    font-family: var(--custom-font);
-    font-size: 12px !important;
-    font-weight: 500;
+  font-family: var(--custom-font);
+  font-size: 12px !important;
+  font-weight: 500;
 }
 .tab-content {
   padding-left: 6px !important;
   padding-right: 6px !important;
 }
 
-.tab-content[soundplaying] .tab-label-container { margin-left: -8px !important;}
-.tab-icon-stack .tab-icon-image { opacity: 1 !important; }
+.tab-content[soundplaying] .tab-label-container {
+  margin-left: -8px !important;
+}
+.tab-icon-stack .tab-icon-image {
+  opacity: 1 !important;
+}
 
-.tab-content[soundplaying] .tab-icon-image { opacity: 0 !important; }
+.tab-content[soundplaying] .tab-icon-image {
+  opacity: 0 !important;
+}
 .tabbrowser-tab[visuallyselected] > .tab-stack > .tab-background {
-	box-shadow: none !important;
-  border: 1px solid var(--custom-accent-lwt) !important;
+  box-shadow: none !important;
+  border: 2px solid var(--custom-accent-lwt) !important;
   background-image: none !important;
 }
 
-.tab-throbber[busy] { color: var(--custom-accent-lwt) !important; }
+.tab-throbber[busy] {
+  color: var(--custom-accent-lwt) !important;
+}
 
 /* hide overflow indicator' separators*/
-spacer[part="overflow-start-indicator"], spacer[part="overflow-end-indicator"] { display: none !important; }
+spacer[part="overflow-start-indicator"],
+spacer[part="overflow-end-indicator"] {
+  display: none !important;
+}
 
 /* fix for toolbar smaller than 34px */
-#scrollbutton-up,#scrollbutton-down { padding-top: 0 !important; padding-bottom: 0 !important;}
+#scrollbutton-up,
+#scrollbutton-down {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
