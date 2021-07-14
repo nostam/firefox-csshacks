@@ -1,6 +1,9 @@
 /* Source file https://github.com/MrOtherGuy/firefox-csshacks/tree/master/chrome/autohide_bookmarks_and_main_toolbars.css made available under Mozilla Public License v. 2.0
 See the above repository for updates as well as full license text. */
 
+/* Dummy variable to support both versions 89-90 */
+:root{ --tab-block-margin: var(--proton-tab-block-margin) }
+
 #navigator-toolbox{
   --uc-bm-height: 22px; /* Might need to adjust if the toolbar has other buttons */
   --uc-bm-padding: 2px; /* Vertical padding to be applied to bookmarks */
@@ -11,18 +14,42 @@ See the above repository for updates as well as full license text. */
 :root[uidensity="compact"] #navigator-toolbox{ --uc-bm-padding: 1px; --uc-navbar-height: -32px }
 :root[uidensity="touch"] #navigator-toolbox{ --uc-bm-padding: 6px }
 
+@media (-moz-proton){
+  #navigator-toolbox{
+     --uc-bm-height: 26px; /* Might need to adjust if the toolbar has other buttons */
+  }
+  :root[uidensity="compact"] #navigator-toolbox{
+    --uc-navbar-height: -34px;
+    --uc-bm-height: 23px;
+  }
+}
+
 :root[sessionrestored] #nav-bar,
 :root[sessionrestored] #PersonalToolbar{
+  background-image: linear-gradient(var(--toolbar-bgcolor),var(--toolbar-bgcolor)), var(--lwt-additional-images,var(--toolbar-bgimage))  !important;
+  background-position: top,var(--lwt-background-alignment);
+  background-position-y: calc(0px - var(--tab-min-height) - 2*var(--tab-block-margin,0px));
+  background-repeat: repeat,var(--lwt-background-tiling);
   transform: rotateX(90deg);
   transform-origin: top;
   transition: transform 135ms linear var(--uc-autohide-toolbar-delay) !important;
   z-index: 2;
 }
+
+:root[sessionrestored] #PersonalToolbar{
+  z-index: 1;
+  background-position-y: calc(0px - var(--tab-min-height) - 2*var(--tab-block-margin,0px) + var( --uc-navbar-height));
+}
+
+:root[lwtheme-image] #nav-bar,
+:root[lwtheme-image] #PersonalToolbar{
+  background-image: linear-gradient(var(--toolbar-bgcolor),var(--toolbar-bgcolor)),var(--lwt-header-image), var(--lwt-additional-images,var(--toolbar-bgimage)) !important;
+}
+
 #nav-bar[customizing],#PersonalToolbar[customizing]{ transform: none !important }
 
 #navigator-toolbox > #PersonalToolbar{
   transform-origin: 0px var(--uc-navbar-height);
-  z-index: 1;
   position: relative;
 }
 
@@ -47,6 +74,9 @@ See the above repository for updates as well as full license text. */
 #navigator-toolbox > *{ pointer-events: auto }
 
 #sidebar-box{ position: relative }
+
+/* Selected tab needs higher z-index now to "hide" the broder below it */
+.tabbrowser-tab[selected]{ z-index: 3 !important; }
 
 /* SELECT TOOLBAR BEHAVIOR */
 /* Comment out or delete one of these to disable that behavior */
