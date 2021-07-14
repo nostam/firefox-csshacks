@@ -20,7 +20,7 @@
   --toolbar-bgcolor: rgb(36, 44, 59) !important;
   --custom-font: "Noto Sans CJK JP", "Noto Sans CJK TC" !important;
   --custom-accent-drk: #2b2550;
-  --custom-accent-lwt: rgba(246, 224, 1, 1);
+  --custom-accent-lwt: rgba(246, 224, 1, 0.8);
 }
 
 #sidebar-box {
@@ -69,8 +69,8 @@ window.sidebar-panel {
 .tab-content[soundplaying] .tab-icon-image { opacity: 0 !important; }
 .tabbrowser-tab[visuallyselected] > .tab-stack > .tab-background {
 	box-shadow: none !important;
-  /* background-color: var(--custom-accent-drk) !important;
-  background-image: none !important; */
+  border: 1px solid var(--custom-accent-lwt) !important;
+  background-image: none !important;
 }
 
 .tab-throbber[busy] { color: var(--custom-accent-lwt) !important; }
