@@ -13,7 +13,7 @@
 @import url(chrome/urlbar_results_in_two_rows.css);
 
 @import url(custom/audio_icon_overlay_on_favicon.css);
-@import url(custom/pre_proton_tabs.css);
+/* @import url(custom/pre_proton_tabs.css); */
 /* Apply your custom modifications after imports */
 
 :root {
