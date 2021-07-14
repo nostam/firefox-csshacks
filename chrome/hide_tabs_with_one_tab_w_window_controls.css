@@ -11,6 +11,9 @@ Get window_control_placeholder_support.css
 Window controls will be all wrong without it
 */
 
+/* Dummy variable to support both versions 89-90 */
+:root{ --tab-block-margin: var(--proton-tab-block-margin) }
+
 #titlebar{ -moz-appearance: none !important; }
 /* We'll use window controls from menubar instead */
 #TabsToolbar > .titlebar-buttonbox-container { display: none }
@@ -51,7 +54,7 @@ Window controls will be all wrong without it
   background-color: transparent !important;
 }
 /* Extra top padding  in maximized window */
-@media (-moz-os-version: windows-win10){
+@media (-moz-os-version: windows-win7),(-moz-os-version: windows-win10){
   :root[sizemode="maximized"] #navigator-toolbox{ padding-top:7px !important; }
 }
 /* Window controls in nav-bar */
@@ -62,3 +65,9 @@ Window controls will be all wrong without it
 }
 
 :root:not([customizing]) #toolbar-menubar[autohide][inactive] > #menubar-items{ pointer-events: none; opacity: 0 }
+
+:root[sizemode="fullscreen"] .titlebar-buttonbox-container{ display: none !important; }
+:root[sizemode="fullscreen"] #TabsToolbar > #window-controls{
+  z-index: 2;
+  top: calc(var(--tab-min-height) + 2 * var(--tab-block-margin,0px));
+}

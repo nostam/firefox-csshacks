@@ -6,28 +6,30 @@ See the above repository for updates as well as full license text. */
 :root{
   --toolbarbutton-inner-padding: 6px !important;
   --proton-tab-block-margin: 2px !important;
+  --tab-block-margin: 2px !important;
   --tabs-shadow-size: 0px !important;
-  --arrowpanel-menuitem-padding: 4px !important;
+  --arrowpanel-menuitem-padding: 5px !important;
   --panel-font-size: inherit !important;
   --arrowpanel-padding: 0.8em !important;
   --inline-tab-padding: 8px !important; /* 8px is default value since it looks good - lower values compactify tabs horizontally */
 }
-.subview-subheader{ height: 24px }
+.subviewbutton.bookmark-item{ padding-block: 4px !important; }
+.subview-subheader{ display: -moz-box }
 menupopup > menuitem,
 menupopup > menu{ padding-block: 0.3em !important; }
 
-#urlbar-container{ padding-block: 2px !important; }
 #urlbar-background{ margin-block: 1px }
+
 /* This is kinda weird, but it makes the horizontal line between tabs and nav-bar render "inside" nav-bar thus tabs are more visibily separated even if there is less space there */
 #nav-bar{ 
   box-shadow: inset 0 var(--tabs-shadow-size) 0 var(--tabs-border-color) !important;
 }
 
 .tab-close-button{
-  margin-inline-start: 2px !important;
-  width: 16px !important;
-  height: 16px !important;
-  padding: 1px !important;
+  margin-inline-start: 0px !important;
+  width: 20px !important;
+  height: 20px !important;
+  padding: 5px !important;
 }
 
 #tabbrowser-tabs{ --uc-tabs-scrollbutton-border: 2px }
@@ -36,7 +38,7 @@ menupopup > menu{ padding-block: 0.3em !important; }
 
 /* OPTIONAL - show audio label in compact mode and make the audio icon behavior match non-compact mode */
 /*
-.tab-secondary-label:is([soundplaying], [muted], [activemedia-blocked], [pictureinpicture]){ display: -moz-box !important; }
+.tab-secondary-label:is([soundplaying], [muted], [activemedia-blocked], [pictureinpicture]){ display: -moz-box !important; margin-bottom: 1px }
 #TabsToolbar:not(:hover) .tab-icon-image{ opacity: 1 !important; }
 #TabsToolbar:not(:hover) .tab-icon-overlay:not([pinned]){ opacity: 0 !important; }
 */
