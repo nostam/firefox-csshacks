@@ -8,7 +8,7 @@ See the above repository for updates as well as full license text. */
 /* Toolbars will be shown normally if window width goes below the value below */
 
 /* Modify it to suit your needs */
-@media screen and (min-width: 1100px) {
+@media screen and (min-width: 1400px) {
   :root {
     --tab-block-margin: var(--proton-tab-block-margin);
   }
@@ -66,7 +66,9 @@ See the above repository for updates as well as full license text. */
   }
 
   /* Window drag space  */
-  :root[tabsintitlebar="true"] #nav-bar{ padding-left: 4px !important }
+  :root[tabsintitlebar="true"] #nav-bar {
+    padding-left: 4px !important;
+  }
 
   /* Rules specific to window controls on right layout */
   @supports -moz-bool-pref("layout.css.osx-font-smoothing.enabled") {
@@ -93,10 +95,14 @@ See the above repository for updates as well as full license text. */
   }
 
   /* Hide dropdown placeholder */
-  #urlbar-container:not(:hover) .urlbar-history-dropmarker{ margin-inline-start: -28px; }
+  #urlbar-container:not(:hover) .urlbar-history-dropmarker {
+    margin-inline-start: -28px;
+  }
 
   /* show two addons icons + overflow menu instead of only overflow menu*/
-  #urlbar-container:not(:focus) { min-width: calc(var(--uc-navigationbar-width) - 150px) !important; }
+  #urlbar-container:not(:focus) {
+    min-width: calc(var(--uc-navigationbar-width) - 150px) !important;
+  }
 }
 /* Fix customization view */
 #customization-panelWrapper > .panel-arrowbox > .panel-arrow {
