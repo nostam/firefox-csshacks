@@ -6,28 +6,27 @@
 @import url(chrome/compact_proton.css);
 @import url(chrome/tab_close_button_always_on_hover.css);
 @import url(chrome/hide_urlbar_first_row.css);
-@import url(chrome/minimal_popup_scrollbars.css);
+/* @import url(chrome/minimal_popup_scrollbars.css); */
 @import url(chrome/dark_additional_windows.css);
 @import url(content/compact_addons_manager.css);
 @import url(chrome/urlbar_results_in_two_rows.css);
 
-@import url(custom/audio_icon_overlay_on_favicon.css);
 /* @import url(custom/pre_proton_tabs.css); */
 /* Apply your custom modifications after imports */
 
 :root {
-  --toolbar-bgcolor: rgb(36, 44, 59) !important;
+  /* --toolbar-bgcolor: rgb(0, 0, 0) !important; */
   --custom-font: "Noto Sans CJK JP", "Noto Sans CJK TC" !important;
-  --custom-accent-drk: #2b2550;
-  --custom-accent-lwt: rgba(246, 224, 1, 0.8);
+  /* --custom-accent-drk: #2b2550;
+  --custom-accent-lwt: rgba(246, 224, 1, 0.8); */
 }
 
 #sidebar-box {
   --sidebar-background-color: var(--toolbar-bgcolor) !important;
 }
-window.sidebar-panel {
+/* window.sidebar-panel {
   --lwt-sidebar-background-color: rgb(36, 44, 59) !important;
-}
+} */
 
 /* Tiny window controller */
 .titlebar-button {
@@ -58,9 +57,9 @@ window.sidebar-panel {
 #tracking-protection-icon-container {
   padding: 2px !important;
 }
-#urlbar:focus-within[pageproxystate="invalid"] {
+/* #urlbar:focus-within[pageproxystate="invalid"] {
   box-shadow: 0 0 0 1px black;
-}
+} */
 
 /* Tabs */
 .tabbrowser-tab {
@@ -83,15 +82,15 @@ window.sidebar-panel {
 .tab-content[soundplaying] .tab-icon-image {
   opacity: 0 !important;
 }
-.tabbrowser-tab[visuallyselected] > .tab-stack > .tab-background {
+/* .tabbrowser-tab[visuallyselected] > .tab-stack > .tab-background {
   box-shadow: none !important;
   border: 2px solid var(--custom-accent-lwt) !important;
   background-image: none !important;
-}
+} */
 
-.tab-throbber[busy] {
+/* .tab-throbber[busy] {
   color: var(--custom-accent-lwt) !important;
-}
+} */
 
 /* hide overflow indicator' separators*/
 spacer[part="overflow-start-indicator"],
