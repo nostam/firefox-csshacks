@@ -1,13 +1,13 @@
 /* fix audio icon is hidden when playing audio */
 
 .tabbrowser-tab:hover .tab-icon-overlay {
-  background-color: #1d1d1d !important;
+  background-color:rgba(221, 221, 221, 1) !important;
 }
 
 .tab-icon-overlay {
   opacity: 1 !important;
   fill-opacity: 1 !important;
-  background-color: black !important;
+  /* background-color: rgba(221, 221, 221, 1) !important; */
 }
 .tabbrowser-tab[selected] .tab-icon-overlay {
   opacity: 1 !important;
