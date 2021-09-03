@@ -12,8 +12,6 @@
 @import url(chrome/urlbar_results_in_two_rows.css);
 
 @import url(chrome/overlay_tab_audio_icons.css);
-/* @import url(custom/audio_icon_overlay_on_favicon.css); */
-/* @import url(custom/pre_proton_tabs.css); */
 /* Apply your custom modifications after imports */
 
 :root {
@@ -90,9 +88,9 @@
   background-image: none !important;
 } */
 
-/* .tab-throbber[busy] {
-  color: var(--custom-accent-lwt) !important;
-} */
+.tab-throbber[busy] {
+  color: var(--panel-banner-item-warning-icon-bgcolor) !important;
+}
 
 /* hide overflow indicator' separators*/
 spacer[part="overflow-start-indicator"],
