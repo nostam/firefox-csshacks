@@ -1,9 +1,9 @@
 /* Source file https://github.com/MrOtherGuy/firefox-csshacks/tree/master/chrome/non_floating_sharp_tabs.css made available under Mozilla Public License v. 2.0
 See the above repository for updates as well as full license text. */
 
-/* This style makes tabs and related items non-rounded and connects tabs to toolbars like in previous Firefox versions. */
-
-/* It's not strictly a requirement, but this style expects compact_proton.css to be loaded before it. */
+/* This style makes tabs and related items non-rounded and connects tabs to toolbars like in previous Firefox versions.
+ * You should set layout.css.color-mix.enabled to true in about:config to make colors apply properly.
+ * It's not strictly a requirement, but this style expects compact_proton.css to be loaded before it. */
 
 :root[id]{
   --proton-tab-block-margin: 0px !important;
@@ -29,9 +29,12 @@ See the above repository for updates as well as full license text. */
 #TabsToolbar{
   --toolbarbutton-inner-padding: 7px !important;
 }
-#navigator-toolbox:not([movingtab]) > #titlebar > #TabsToolbar{
+/* Few exceptions for default light theme */
+#navigator-toolbox:not([movingtab]):-moz-lwtheme > #titlebar > #TabsToolbar{
   --toolbar-bgcolor: transparent;
 }
+#TabsToolbar:not(:-moz-lwtheme){ --tab-line-color: transparent; }
+.tab-background[selected]:not(:-moz-lwtheme){ background: var(--toolbar-bgcolor) !important; }
 
 #TabsToolbar .toolbarbutton-1 > .toolbarbutton-badge-stack,
 #TabsToolbar .toolbarbutton-1 > .toolbarbutton-icon{ border-radius: 2px !important;  }
@@ -61,6 +64,11 @@ See the above repository for updates as well as full license text. */
 .tab-background{
   border-radius: 0 !important;
   box-shadow: none !important;
+}
+
+.tab-background:not([selected])[multiselected]{
+  background: color-mix(in srgb, currentColor 11%, transparent) !important;
+  margin-inline-start: -1px; 
 }
 
 /* Line to mark selected tab */
