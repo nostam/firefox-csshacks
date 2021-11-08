@@ -4,9 +4,6 @@ See the above repository for updates as well as full license text. */
 /* Makes tabs to appear on multiple lines below the web content */
 /* Tab reordering will not work and can't be made to work */
 
-/* !!!WARNING!!! */
-/* This style completely breaks extension popups. As a workaround, you can pin the extension buttons to overflow menu which allows them to work. */
-
 /* Make menubar enabled for getting window controls in correct place. Menubar options will be shown as overlay when mouse is at top-left corner */
 
 /* It's recommended to move tabs new-tab-button outside tabs toolbar */
@@ -31,21 +28,26 @@ See the above repository for updates as well as full license text. */
   @media (-moz-os-version: windows-win7),(-moz-os-version: windows-win10){
     :root[sizemode="maximized"]{ --multirow-top-padding: 8px }
   }
-  :root[uidensity="compact"]{--multirow-toolbar-height: 32px}
+  :root[uidensity="compact"]{--multirow-toolbar-height: 34px}
   :root{ border-top-width: 0px !important }
 
   #main-window > body > box,
   #navigator-toolbox{ -moz-box-ordinal-group: 2; border-bottom: 0px !important }
+  
+  #tab-notification-deck{ -moz-box-ordinal-group: 0 }
 
   #titlebar{-moz-appearance: none !important; } /* Try setting to "-moz-window-titlebar" if you face issues */
 
   #nav-bar{
     position: fixed !important;
-    display: flex;
+    /* For some reason -webkit-box behaves internally like -moz-box, but can be used with fixed position. display: flex would work too but it breaks extension menus. */
+    display: -webkit-box;
+    -webkit-box-flex: 1;
     margin-left: 30px;
     width: calc(100vw - 30px);
     top: var(--multirow-top-padding);
   }
+  #nav-bar-customization-target{ -webkit-box-flex: 1 }
   :root[inFullscreen] #nav-bar,
   :root[tabsintitlebar] #nav-bar{
     margin-right: 138px;
@@ -183,6 +185,9 @@ See the above repository for updates as well as full license text. */
 
   /* This should fix potential flash that could occur when bottom border is hovered to show tabs in fullscreen mode */
   #tabbrowser-tabpanels{ background-color: var(--lwt-accent-color) !important; }
+
+  /* remove bottom margin so it doesn't throw off row height computation */
+  #tabs-newtab-button{ margin-bottom: 0 !important; }
 
   /* Hide some things that are unnecessary in multi-row below content mode */
 
