@@ -106,15 +106,16 @@ spacer[part="overflow-end-indicator"] {
   padding-bottom: 0 !important;
 }
 
-/* context line falls within tab border*/ 
+/* context line falls within tab border  */
  .tab-context-line {
-	margin: 1px 1px 0 !important;
- }
+	margin: 1px 2px 0 !important;
+ } 
  
  /* make selected pop out from dark tabtoolbar bg*/
  .tab-background[selected="true"] {
 	 box-shadow: 0px 0px 2px 1px black !important; 
-	 border: 1px solid rgba(128,128,142,0.5) !important;
+	 outline: 1px solid rgba(128,128,142,0.25) !important; 
+	 outline-offset: -1px;
 	 }
  
  
