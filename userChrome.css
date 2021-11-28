@@ -3,7 +3,7 @@
 /* Import your desired components first */
 
 @import url(chrome/navbar_tabs_responsive_oneliner.css);
-@import url(chrome/compact_proton.css);
+@import url(chrome/compact_proton.css); 
 @import url(chrome/tab_close_button_always_on_hover.css);
 @import url(chrome/hide_urlbar_first_row.css);
 /* @import url(chrome/minimal_popup_scrollbars.css); */
@@ -11,9 +11,9 @@
 @import url(content/compact_addons_manager.css);
 @import url(chrome/urlbar_results_in_two_rows.css);
 
-@import url(chrome/overlay_tab_audio_icons.css);
+/* @import url(chrome/overlay_tab_audio_icons.css); */
 /* Apply your custom modifications after imports */
-
+@import url(custom/audio_icon_overlay_on_favicon.css);
 :root {
   /* --toolbar-bgcolor: rgb(0, 0, 0) !important; */
   --custom-font: "Noto Sans CJK JP", "Noto Sans CJK TC" !important;
@@ -88,6 +88,7 @@
   background-image: none !important;
 } */
 
+.tab-background {}
 .tab-throbber[busy] {
   color: var(--panel-banner-item-warning-icon-bgcolor) !important;
 }
@@ -104,3 +105,13 @@ spacer[part="overflow-end-indicator"] {
   padding-top: 0 !important;
   padding-bottom: 0 !important;
 }
+
+/* context line falls within tab border*/ 
+ .tab-context-line {
+	margin: 1px 1px 0 !important;
+ }
+ 
+ /* make selected pop out from dark tabtoolbar bg*/
+ .tab-background[selected="true"] {box-shadow: 0px 0px 2px 1px black !important;}
+ 
+ 

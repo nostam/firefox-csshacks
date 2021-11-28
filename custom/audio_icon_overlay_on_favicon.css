@@ -1,20 +1,3 @@
 /* fix audio icon is hidden when playing audio */
-
-.tabbrowser-tab:hover .tab-icon-overlay {
-  background-color:rgba(221, 221, 221, 1) !important;
-}
-
-.tab-icon-overlay {
-  opacity: 1 !important;
-  fill-opacity: 1 !important;
-  /* background-color: rgba(221, 221, 221, 1) !important; */
-}
-.tabbrowser-tab[selected] .tab-icon-overlay {
-  opacity: 1 !important;
-  fill-opacity: 1 !important;
-}
-.tab-icon-overlay[muted] {
-  left: 6px !important;
-  bottom: 4px !important;
-  border-radius: 50% !important;
-}
+.tab-icon-stack:is([soundplaying],[muted],[activemedia-blocked]):not([pinned]) > .tab-icon-image{ visibility: hidden }
+.tab-icon-overlay { opacity: 1 !important; padding: 0 !important; position: absolute; fill-opacity: 1 !important; border-radius: 50% !important; }
