@@ -12,23 +12,16 @@ See the above repository for updates as well as full license text. */
 }
 
 :root[sizemode="maximized"]{
-  --uc-toolbox-rotation: 89deg;
+  --uc-toolbox-rotation: 88.5deg;
 }
 
-@media (-moz-os-version: windows-win7),(-moz-os-version: windows-win10){
+/* Dummy variable to support versions 94-96, can be removed when 96 lands */
+:root{ --lwt-frame: var(--lwt-accent-color) }
 
-  :root[tabsintitlebar][sizemode="maximized"]:not([inDOMFullscreen]) > body > box{ margin-top: 8px !important; }
+@media  (-moz-platform: windows),
+        (-moz-os-version: windows-win7),
+        (-moz-os-version: windows-win10){
 
-  @media screen and (min-resolution: 1.25dppx){
-    :root[tabsintitlebar][sizemode="maximized"]:not([inDOMFullscreen]) > body > box{ margin-top: 7px !important; }
-  }
-  @media screen and (min-resolution: 1.5dppx){
-    :root[tabsintitlebar][sizemode="maximized"]:not([inDOMFullscreen]) > body > box{ margin-top: 7px !important; }
-  }
-  @media screen and (min-resolution: 2dppx){
-    :root[tabsintitlebar][sizemode="maximized"]:not([inDOMFullscreen]) > body > box{ margin-top: 6px !important; }
-    :root[tabsintitlebar][sizemode="maximized"] #navigator-toolbox{ margin-top: -1px; }
-  }
   #navigator-toolbox:not(:-moz-lwtheme){ background-color: -moz-dialog !important; }
 }
 
@@ -38,7 +31,7 @@ See the above repository for updates as well as full license text. */
 #navigator-toolbox{
   position: fixed !important;
   display: block;
-  background-color: var(--lwt-accent-color,black) !important;
+  background-color: var(--lwt-frame,black) !important;
   transition: transform 82ms linear, opacity 82ms linear !important;
   transition-delay: var(--uc-autohide-toolbox-delay) !important;
   transform-origin: top;
@@ -88,7 +81,6 @@ See the above repository for updates as well as full license text. */
 
 /* Uncomment the following for compatibility with tabs_on_bottom.css - this isn't well tested though */
 /*
-:root{ --uc-titlebar-padding: 0px !important; }
 #navigator-toolbox{ flex-direction: column; display: flex; }
 #titlebar{ order: 2 }
 */
