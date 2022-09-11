@@ -3,7 +3,7 @@
 let DB = null;
 
 function initDB(obj){
-  DB = obj;
+  DB = obj.content;
   Object.defineProperty(DB,"query",{value:function (q,list){
     let nlist = [];
     for(let key of list || this.keys){
@@ -35,10 +35,10 @@ function fetchWithType(url){
       }
       if(ext === "json"){
         response.json()
-        .then(resolve)
+        .then((obj) => resolve({file:url,content:obj}));
       }else{
         response.text()
-        .then(resolve)
+        .then((text) => resolve({file:url,content:text,name:url}))
         
       }
     },except => reject(except))
@@ -103,19 +103,12 @@ function getSecondaryCategories(list){
   return ret
 }
 
-function clearCodeBlock(){
-  const pre = document.getElementById("previewBox");
-  for(let el of Array.from(pre.childNodes)){
-    pre.removeChild(el)
-  }
-  return
-}
-
-function showMatchingTargets(fileNames){
+function showMatchingTargets(fileNames,setSelected = false){
   let bonus = 0;
   for(let c of Array.from(document.querySelectorAll(".target"))){
     if(fileNames.includes(getText(c))){
-      c.classList.remove("hidden")
+      c.classList.remove("hidden");
+      setSelected && selectedTarget.add(c)
     }else{
       if(c.classList.contains("selected")){
         bonus++
@@ -124,14 +117,12 @@ function showMatchingTargets(fileNames){
       }
       
     }
-    //fileNames.includes(getText(c)) ? c.classList.remove("hidden") : c.classList.add("hidden");
   }
   document.getElementById("targets").setAttribute("style",`--grid-rows:${Math.ceil(fileNames.length/3)}`)
 }
 
 function onCategoryClicked(categoryNode,isSecondary = false){
   
-  //clearCodeBlock();
   currentCategory.set(categoryNode,isSecondary);
   
   let secondaryCategoriesNode = document.querySelector("#secondaryCategories");
@@ -153,16 +144,54 @@ function onCategoryClicked(categoryNode,isSecondary = false){
   return
 }
 
+
 async function onTargetClicked(target,append = false){
-  const codeBlock = document.querySelector("pre");
   const text = typeof target === "string"
               ? target
               : getText(target);
   
   fetchWithType(`chrome/${text}`)
-  //.then(text => (codeBlock.textContent = text))
-  .then(text => Highlighter.parse(codeBlock,text,append))
+  .then(obj => {
+    let box = document.getElementById("previewBox");
+    if(append){
+      if(obj.file.endsWith("window_control_placeholder_support.css")){
+        obj.insertMode = box.InsertModes.Prepend;
+        box.insertContent(obj);
+      }else{
+        obj.insertMode = box.InsertModes.AppendLines;
+        box.insertContent(obj);
+      }
+    }else{
+      box.value = obj
+    }
+  })
   .catch(e => console.log(e))
+}
+
+function onFilenameClicked(box,ctrlKey){
+  if(typeof box === "string"){
+    box = document.querySelector(`.target[title="${box}"]`);
+  }
+  if(!box){ return }
+  if(!box.classList.contains("selected")){
+    if(ctrlKey && selectedTarget.getIt()){
+      selectedTarget.add(box);
+    }else{
+      selectedTarget.set(box);
+    }
+    onTargetClicked(box,ctrlKey);
+    selectedTarget.setUrlSearchParams()
+  }else{
+    if(ctrlKey){
+      selectedTarget.deselect(box);
+      let previewbox = document.getElementById("previewBox");
+      let preview = previewbox.getNamedSection(`chrome/${box.getAttribute("title")}.css`);
+      if(preview){
+        preview.remove();
+      }
+      selectedTarget.setUrlSearchParams()
+    }
+  }
 }
 
 function onSomeClicked(e){
@@ -175,32 +204,29 @@ function onSomeClicked(e){
       onCategoryClicked(e.target,true/* isSecondary */);
       break;
     case "targets":
-      if(!e.target.classList.contains("selected")){
-        if(e.ctrlKey && selectedTarget.getIt()){
-          selectedTarget.add(e.target);
-          onTargetClicked(e.target,true);
-        }else{
-          selectedTarget.set(e.target);
-          onTargetClicked(e.target);
-        }
-      }
+      onFilenameClicked(e.target,e.ctrlKey);
+      
       break;
     default:
+    
       break;
   }
 }
 
 const selectedTarget = new(function(){
   const selected = new Set();
+  const state_object = {};
   this.set = (el) => {
     this.clear();
     el.classList.add("selected");
+    el.classList.remove("hidden");
     selected.add(el);
   }
   this.getIt = () =>{ return selected.values().next().value };
   this.add = (el) => {
     selected.add(el);
     el.classList.add("selected");
+    el.classList.remove("hidden");
   };
   this.deselect = (el) => {
     el.classList.remove("selected");
@@ -210,6 +236,13 @@ const selectedTarget = new(function(){
     selected.forEach(el=>el.classList.remove("selected"));
     selected.clear();
     return true
+  }
+  this.setUrlSearchParams = () => {
+    let t = [];
+    for(let value of selected.values()){
+      t.push(value.getAttribute("title")+".css")
+    }
+    history.replaceState(state_object,"",`?file=${t.join(",")}`);
   }
 })();
 
@@ -277,256 +310,11 @@ function createCategories(){
   })();
   
   for(let cat of CAT_NAMES){
-  //  CAT_PARENT.appendChild(createCategory(cat.name))
     CAT_PARENT.appendChild(createNode(cat,"category"));
     CAT_SECOND.appendChild(createNode(cat,"category"));
   }
   
 }
-
-const Highlighter = new(function(){
-
-  const state = new (function(){
-    let current = 0;
-    let previous = 0;
-    this.now = ()=>current;
-    this.previous = ()=>previous;
-    this.set = function(a){ previous = current; current = a; return} 
-  })();
-  
-  let pointer = 0;
-  let token = "";
-  
-  const selectorToClassMap = new Map([
-  [":","pseudo"],
-  ["#","id"],
-  [".","class"],
-  ["[","attribute"]]);
-
-  this.parse = function(targetNode,text,appendMode){
-    
-    !appendMode && clearCodeBlock();
-    let node = appendMode ? targetNode.firstChild : document.createElement("div");
-    
-    function createNewRuleset(){
-      let ruleset = document.createElement("span");
-      ruleset.className = "ruleset";
-      node.appendChild(ruleset);
-      return ruleset
-    }
-    
-    let rulesetUnderConstruction = createNewRuleset();
-
-    function createElementFromToken(type,c){
-      if(token.length === 0 && !c){
-        return
-      }
-      let n = document.createElement("span");
-      
-      switch(type){
-        case "selector":
-        // This isn't exactly correct, but it works because parser treats \r\n sequences that follow a closed comment as "selector"
-          rulesetUnderConstruction = createNewRuleset();
-          let parts = token.split(/([\.#:\[]\w[\w-_"'=\]]*|\s\w[\w-_"'=\]]*)/);
-        
-          for(let part of parts){
-            if(part.length === 0){
-              continue
-            }
-            let c = part[0];
-            switch (c){
-              case ":":
-              case "#":
-              case "[":
-              case ".":
-                let p = n.appendChild(document.createElement("span"));
-                p.className = selectorToClassMap.get(c);
-                p.textContent = part;
-                break;
-              default:
-                n.append(part);
-            }
-          }
-          break
-        case "comment":
-          let linksToFile = token.match(/[\w-\.]+\.css/g);
-          if(linksToFile && linksToFile.length){
-            let linkIdx = 0;
-            let fromIdx = 0;
-            while(linkIdx < linksToFile.length){
-              let part = linksToFile[linkIdx++];
-              let idx = token.indexOf(part);
-              n.append(token.substring(fromIdx,idx));
-              let link = document.createElement("a");
-              link.textContent = part;
-              link.href = `https://github.com/MrOtherGuy/firefox-csshacks/tree/master/chrome/${part}`;
-              link.target = "_blank";
-              n.appendChild(link);
-              fromIdx = idx + part.length;
-            }
-            n.append(token.substring(fromIdx));
-          }else{
-            n.textContent = c || token;
-          }
-          break;
-        case "value":
-          let startImportant = token.indexOf("!");
-          if(startImportant === -1){
-            n.textContent = c || token;
-          }else{
-            n.textContent = token.substr(0,startImportant);
-            let importantTag = document.createElement("span");
-            importantTag.className = "important-tag";
-            importantTag.textContent = "!important";
-            n.appendChild(importantTag);
-            if(token.length > (9 + startImportant)){
-              n.append(";")
-            }
-          }
-          break;
-        case "function":
-          n.textContent = c || token.slice(0,-1);
-          break
-        default:
-          n.textContent = c || token;
-      }
-      
-      n.className = (`token ${type}`);
-      token = "";
-      rulesetUnderConstruction.appendChild(n);
-      return
-    }
-    
-    let c;
-    let functionValueLevel = 0;
-    let curly = false;
-    while(pointer < text.length){
-      c = text[pointer];
-      
-      const currentState = state.now();
-      curly = currentState != 2 && (c === "{" || c === "}");
-      if(!curly){
-        token+=c;
-      }
-      switch(currentState){
-      
-        case 0:
-          switch(c){
-            case "/":
-              if(text[pointer+1] === "*"){
-                state.set(2);
-                if(token.length > 1){
-                  token = token.slice(0,-1);
-                  createElementFromToken("selector");
-                  token += "/"
-                }
-              }
-              break;
-            case "{":
-              state.set(3);
-              createElementFromToken("selector");
-              break;
-            case "}":
-              createElementFromToken("text");
-              break;
-            case "@":
-              state.set(5);
-          }
-          
-          break;
-      
-        case 2:
-          switch(c){
-            case "*":
-              if(text[pointer+1] === "/"){
-                token += "/";
-                pointer++;
-                state.set(state.previous());
-                createElementFromToken("comment");
-              }
-          }
-          break;
-
-        case 3:
-          switch(c){
-            case "/":
-              if(text[pointer+1] === "*"){
-                state.set(2);
-              }
-              break;
-            case ":":
-              createElementFromToken("property");
-              state.set(4);
-              break;
-            case "}":
-              createElementFromToken("text");
-              state.set(0);
-          }
-          break;
-        case 4:
-          switch(c){
-            case ";":
-              createElementFromToken("value");
-              state.set(3);
-              break;
-            case "}":
-              createElementFromToken("value");
-              state.set(0);
-              break;
-            case "(":
-              createElementFromToken("value");
-              functionValueLevel++;
-              state.set(7);
-          }
-          break;
-        case 5:
-          switch(c){
-            case " ":
-              createElementFromToken("atrule");
-              state.set(6);
-          }
-          break;
-        case 6:
-          switch(c){
-            case ";":
-            case "{":
-              createElementFromToken("atvalue");
-              state.set(0);
-          }
-          break
-        case 7:
-          switch(c){
-            case ")":
-              functionValueLevel--;
-              if(functionValueLevel === 0){
-                createElementFromToken("function");
-                token = ")";
-                state.set(4);
-              }
-              break;
-            case "}":
-              functionValueLevel = 0;
-              state.set(0)
-          }
-        default:
-          false
-      }
-      
-      curly && createElementFromToken("curly",c);
-      
-      pointer++
-    }
-    createElementFromToken("text");
-    token = "";
-    state.set(0);
-    pointer = 0;
-    
-    targetNode.appendChild(node);
-    
-    return
-  }
-  return this
-})();
 
 async function handleSearchQuery(){
   let params = (new URL(document.location)).searchParams;
@@ -544,18 +332,20 @@ async function handleSearchQuery(){
   param = params.get("file");
   if(param){
     let files = param.split(",").filter(a => DB.keys.includes(a));
-    
+    let box = document.getElementById("previewBox");
     if(files.length === 0 ){
       return
     }
-
-    const codeBlock = document.querySelector("pre");   
+ 
     const promises = files.map(file=>fetchWithType(`chrome/${file}`).catch(e=>""));
     
     Promise.all(promises)
     .then(responses => {
-      showMatchingTargets(files);
-      Highlighter.parse(codeBlock,responses.join("\n\n/*************************************/\n\n"))
+      showMatchingTargets(files,true);
+      responses.forEach((res)=>{
+        res.insertMode = res.file.endsWith("window_control_placeholder_support.css") ? box.InsertModes.Prepend : box.InsertModes.AppendLines;
+        box.insertContent(res)
+      })
     });
     
   }
@@ -577,14 +367,14 @@ document.onreadystatechange = (function () {
   
   if (document.readyState === "complete") {
     function linkClicked(ev){
-      if(ev.target instanceof HTMLAnchorElement){
-        let ref = ev.target.href;
+      if(ev.originalTarget instanceof HTMLAnchorElement){
+        let ref = ev.originalTarget.href;
         if(!ref){
           return
         }
         let fileName = ref.slice(ref.lastIndexOf("/"));
         if(fileName.endsWith(".css")){
-          onTargetClicked(fileName);
+          onFilenameClicked(fileName.slice(1,-4),ev.ctrlKey);
           ev.preventDefault();
         }
       }
