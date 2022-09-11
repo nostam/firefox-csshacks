@@ -8,14 +8,11 @@ See the above repository for updates as well as full license text. */
 /* Toolbars will be shown normally if window width goes below the value below */
 
 /* Modify it to suit your needs */
-@media screen and (min-width: 1400px) {
-  :root {
-    --tab-block-margin: var(--proton-tab-block-margin);
-  }
-  :root[uidensity="compact"] {
+@media screen and (min-width: 1100px){
+
+  :root[uidensity="compact"]{
     --tab-block-margin: 2px !important;
-    --proton-tab-block-margin: 2px !important;
-  }
+    }
 
   /* Modify these to change relative widths or default height */
   #navigator-toolbox {
@@ -23,18 +20,14 @@ See the above repository for updates as well as full license text. */
     --uc-toolbar-height: 40px;
     --uc-urlbar-min-width: 50vw; /* minimum width for opened urlbar */
   }
-  @media (-moz-proton) {
-    #scrollbutton-up,
-    #scrollbutton-down {
-      border-block-width: 2px !important;
-    }
-  }
-  /* prevent urlbar overflow on narrow windows */
-  /* Dependent on how many items are in navigation toolbar ADJUST AS NEEDED */
-  @media screen and (max-width: 1500px) {
-    #urlbar-container {
-      min-width: unset !important;
-    }
+
+  #scrollbutton-up,
+  #scrollbutton-down{ border-block-width: 2px !important; }
+
+/* prevent urlbar overflow on narrow windows */
+/* Dependent on how many items are in navigation toolbar ADJUST AS NEEDED */
+  @media screen and (max-width: 1500px){
+    #urlbar-container{ min-width:unset !important }
   }
 
   /* Override for other densities */
