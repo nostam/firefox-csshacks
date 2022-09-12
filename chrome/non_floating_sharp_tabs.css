@@ -6,6 +6,7 @@ See the above repository for updates as well as full license text. */
  * It's not strictly a requirement, but this style expects compact_proton.css to be loaded before it. */
 
 :root[id]{
+  --proton-tab-block-margin: 0px !important;
   --tab-block-margin: 0px !important;
   --tabs-shadow-size: 1px !important;
   
@@ -14,7 +15,7 @@ See the above repository for updates as well as full license text. */
 }
 
 /* Uncomment next line to force specific color for tab top line */
-/* #tabbrowser-tabs{ --lwt-tab-line-color: blue !important; } */
+/* #tabbrowser-tabs{ --tab-line-color: blue !important; } */
 
 /* These next two rules set a color for border around tabs and between tabs & navigation toolbars. Set to transparent to remove the border.*/
 #nav-bar{
@@ -23,7 +24,6 @@ See the above repository for updates as well as full license text. */
 }
 .tab-background[selected]{
   border-inline: 1px solid color-mix(in srgb, currentcolor 30%, transparent) !important;
-  border-bottom-color: transparent !important;
 }
 
 #TabsToolbar{
@@ -33,26 +33,22 @@ See the above repository for updates as well as full license text. */
 #navigator-toolbox:not([movingtab]):-moz-lwtheme > #titlebar > #TabsToolbar{
   --toolbar-bgcolor: transparent;
 }
-
+#TabsToolbar:not(:-moz-lwtheme){ --tab-line-color: transparent; }
 .tab-background[selected]:not(:-moz-lwtheme){ background: var(--toolbar-bgcolor) !important; }
 
-#TabsToolbar-customization-target > .toolbarbutton-1 > .toolbarbutton-badge-stack,
-#TabsToolbar-customization-target > .toolbarbutton-1 > .toolbarbutton-icon{ border-radius: 2px !important;  }
+#TabsToolbar .toolbarbutton-1 > .toolbarbutton-badge-stack,
+#TabsToolbar .toolbarbutton-1 > .toolbarbutton-icon{ border-radius: 2px !important;  }
 
 /* tabs newtab button needs some special styling... */
-#tabs-newtab-button{
-  padding-inline: 0 !important;
-  -moz-box-align: stretch !important;
-}
-/* We draw the icon as background-image to get correct scaling regardless of toolbar height */
-#tabs-newtab-button > .toolbarbutton-icon{
+#tabs-newtab-button{ padding-inline: 0 !important; }
+#tabbrowser-arrowscrollbox > #tabs-newtab-button > .toolbarbutton-icon{
   border-radius: 0 !important; 
-  width: var(--tab-min-height) !important; 
+  width: initial !important; 
   height: initial !important;
-  list-style-image: none;
-  background-image: url(chrome://global/skin/icons/plus.svg);
-  background-position: center;
-  background-repeat: no-repeat;
+  padding: 9px !important;
+}
+:root[uidensity="compact"] #tabbrowser-arrowscrollbox > #tabs-newtab-button > .toolbarbutton-icon{
+  padding: 7px !important;
 }
 
 #scrollbutton-up,
@@ -68,8 +64,6 @@ See the above repository for updates as well as full license text. */
 .tab-background{
   border-radius: 0 !important;
   box-shadow: none !important;
-  border-top: 0 !important;
-  outline: none !important;
 }
 
 .tab-background:not([selected])[multiselected]{
@@ -89,7 +83,7 @@ See the above repository for updates as well as full license text. */
 }
 .tab-stack > .tab-background[selected]::before{
   background-color: highlight;
-  background-image: linear-gradient(var(--lwt-tab-line-color),var(--lwt-tab-line-color));
+  background-image: linear-gradient(var(--tab-line-color),var(--tab-line-color));
 }
 /* Photon-like tab on hover animation for the top line */
 @keyframes tab-onhover-line-anim{ from{ margin-inline: 20px } to { margin-inline: 0 } }
