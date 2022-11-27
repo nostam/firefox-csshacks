@@ -10,9 +10,6 @@ Additionally on Linux, you may need to get:
 linux_gtk_window_control_patch.css
 */
 
-/* Dummy variable to support both versions 89-90 */
-:root{ --tab-block-margin: var(--proton-tab-block-margin) }
-
 .titlebar-buttonbox-container{
   position: fixed;
   display: block;

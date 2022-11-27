@@ -8,11 +8,15 @@ See the above repository for updates as well as full license text. */
 
 @-moz-document url(chrome://browser/content/browser.xhtml){
 
+  :root{
+    --uc-vertical-menubar-width: 36px;
+  }
+
   :root:not([customizing]) #titlebar{
     position: fixed;
     display: block;
     -moz-appearance: none !important;
-    right: 0px; 
+    right: 0px;
     height: 100vh;
     width: 30px;
   }
@@ -37,7 +41,8 @@ See the above repository for updates as well as full license text. */
     margin-top: 40px;
     width: 30px;
     -moz-box-orient: vertical;
-    -moz-box-flex: 1;
+    flex-grow: 1;
+    background-color: var(--lwt-accent-color);
   }
 
   #toolbar-menubar > .titlebar-buttonbox-container,#toolbar-menubar > spacer{ display: none !important; }
@@ -47,8 +52,8 @@ See the above repository for updates as well as full license text. */
 
   #toolbar-menubar:not([customizing]) #main-menubar{
     -moz-box-orient: vertical;
-    margin-left: -60px;
-    background-color: var(--lwt-accent-color)
+    margin-left: -40px;
+    background-color: var(--lwt-accent-color);
   }
 
   :root:not([inDOMFullscreen]) > #content-deck,:root:not([inDOMFullscreen]) #browser{ margin-right: 30px }

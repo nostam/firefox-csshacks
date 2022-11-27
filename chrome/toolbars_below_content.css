@@ -6,13 +6,14 @@ See the above repository for updates as well as full license text. */
 /* By default, menubar will stay on top with two options to select it's behavior - see below */
 
 @-moz-document url(chrome://browser/content/browser.xhtml){
+
   #titlebar{ -moz-appearance: none !important; }
 
   @media (-moz-os-version: windows-win10){
     /* Next two variables are used by autohide_menubar.css */
     #toolbar-menubar{ --uc-menubar-extra-margin: 0px }
     :root[sizemode="maximized"] #toolbar-menubar{ --uc-menubar-extra-margin: 8px }
-    
+
     :root[sizemode="maximized"][tabsintitlebar] :where(#browser,#customization-container,#toolbar-menubar){ margin-top: 8px }
   }
 
@@ -24,7 +25,7 @@ See the above repository for updates as well as full license text. */
   }
 
   /* Remove the next row if you want tabs to be the top-most row */
-  #titlebar{ -moz-box-ordinal-group: 2 } 
+  #titlebar{ -moz-box-ordinal-group: 2 }
 
   #toolbar-menubar{ position: fixed; display: flex; width: 100vw; top: 0px; }
   /* Remove bottom border that won't do anything useful when at bottom of the window */
@@ -52,25 +53,25 @@ See the above repository for updates as well as full license text. */
   #navigator-toolbox[inFullscreen]{ margin-top: 0 !important }
   #navigator-toolbox[inFullscreen][style*="margin-top"]{ visibility: collapse }
   #fullscr-toggler{ bottom: 0; top: unset !important; }
-  
+
   /* These three rules exist for compatibility with autohide_toolbox.css */
   #navigator-toolbox{ bottom: 0px; transform-origin: bottom }
   #main-window > body > box{ margin-top: 0 !important; }
   #toolbar-menubar{ z-index: 1; background-color: var(--lwt-accent-color,black); }
-  
+
   /**************
   Menubar options - By default, menubar is overlayed on top of web-content
   ***************/
 
  /* Uncomment the following if you want static menubar on top of the window (make menubar enabled)
   * Use when menubar is enabled to always show it */
-  
+
   /*
   #browser,#customization-container{ padding-top: var(--uc-menubar-spacer,28px) }
   */
-  
+
   /* OR, if uncomment the following if you want menubar to appear below content, above tabs toolbar */
-  
+
   /*
   #toolbar-menubar{ position: static; display: -moz-box; margin-top: 0px !important; background-color: transparent }
   */

@@ -11,13 +11,8 @@ See the above repository for updates as well as full license text. */
 }
 scrollbox[orient="vertical"]{
   display: var(--uc-popup-display,inherit);
-<<<<<<< HEAD
   grid-template-columns: 38px 1fr;
-  grid-template-rows: 0
-=======
-  grid-template-columns: 38px 1fr; 
   grid-template-rows: 0;
->>>>>>> master
 }
 
 scrollbox[orient="vertical"]::before{
@@ -32,7 +27,7 @@ scrollbox[orient="vertical"]::before{
   flex-direction: column !important;
   grid-area: 1 / 1 / auto / 1;
   min-width: unset !important;
-  
+
 }
 #context-navigation > menuitem{ min-height: 38px; width: unset !important; }
 #context-navigation > menuitem > .menu-iconic-left{ margin: 0 !important; padding: 0 !important; }

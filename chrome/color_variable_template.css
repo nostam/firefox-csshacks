@@ -9,9 +9,12 @@ See the above repository for updates as well as full license text. */
   --arrowpanel-color: cyan !important;
   --arrowpanel-dimmed: rgba(0,0,0,0.4) !important;
   /* window and toolbar background */
-  --lwt-accent-color: purple !important;
+  --lwt-accent-color: red !important;
+  --lwt-accent-color-inactive: green !important;
   --toolbar-bgcolor: rgba(0,0,0,0.4) !important;
-  /* tabs */
+  /* tabs with system theme - text is not controlled by variable */
+  --tab-selected-bgcolor: powderblue !important;
+  /* tabs with any other theme */
   --lwt-text-color: cyan !important;
   /* toolbar area */
   --toolbarbutton-icon-fill: white !important;

@@ -78,6 +78,7 @@
 "navbar_tabs_oneliner_tabs_on_left.css":["one-line","minimal","tabs","nav-bar","toolbars"],
 "navbar_tabs_responsive_oneliner.css":["one-line","minimal","tabs","nav-bar","toolbars"],
 "navigation_buttons_inside_urlbar.css":["navigation","buttons","urlbar"],
+"newtab_button_always_on_hover.css":["tabs","hiding"],
 "non_floating_sharp_tabs.css":["tab","proton","buttons"],
 "numbered_tabs.css":["tabs"],
 "overlay_menubar.css":["menubar"],
@@ -133,13 +134,7 @@
 "vertical_menubar.css":["menubar","hack"],
 "vertical_popup_menubar.css":["menubar","menu","toolbars","popup"],
 "window_control_fallback_for_custom_windows_theme.css":["window-control","buttons","colors","patch"],
+"window_control_force_linux_system_style.css":["window-control","buttons","icon"],
 "window_control_placeholder_support.css":["window-control","patch"],
-"loading_indicator_bouncing_line.css":["status","navigation","effect"],
-"loading_indicator_rotating_image.css":["navigation","effect","status"],
-"menupopup_forced_color_schemes.css":["popup","colors","menu"],
-"centered_tab_label.css":["tab"],
-"dark_date_picker_panel.css":["popup","dark-mode"],
-"textual_searchbar_one-offs.css":["popup","menu"],
-"menulike_bookmarks_folder_popups.css":["menu","bookmarks","colors"],
-"selected_tab_gradient_border.css":["tab","colors","effect"]
+"vertical_urlbar_one-off_items.css":["urlbar"]
 }

@@ -65,6 +65,11 @@ As a workaround, the -moz-element background image is removed somewhat often whi
 #statuspanel{ color: var(--toolbar-field-color, black) ; z-index: -1; max-width: 100% !important; }
 #statuspanel[type="status"] { color: Highlight }
 
+/* This creates opaque layer to be shown in front of "hidden" real statuspanel */
+.browserStack{
+  background-color: var(--tabpanel-background-color);
+}
+
 /*  OPTIONAL FEATURES  */
 /* Uncomment to enable */
 
