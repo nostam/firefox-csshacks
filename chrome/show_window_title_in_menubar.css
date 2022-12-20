@@ -3,25 +3,33 @@ See the above repository for updates as well as full license text. */
 
 /* Shows window title in menubar */
 /* Enable menubar for correct behavior */
-@-moz-document url(chrome://browser/content/browser.xhtml){
-  :root:not([sizemode="fullscreen"]) > head{
+@-moz-document url(chrome://browser/content/browser.xhtml)
+{
+  :root:not([sizemode="fullscreen"]) > head {
     display: block;
     position: fixed;
+    top: 2px;
     right: 140px; /* Space for window controls */
-    width: calc(100vw - 440px); /* Window width - window control width - menuitem (English) width */
+    width: calc(
+      100vw - 440px
+    ); /* Window width - window control width - menuitem (English) width */
     text-align: center;
     z-index: 1;
     pointer-events: none;
-  }
-  head > *{ display: none }
-  head > title{
-    display: -moz-inline-box;
-    padding-top: 1px;
-    max-width: 50vw;
-    overflow-x: -moz-hidden-unscrollable;
     text-overflow: ellipsis;
+    overflow-x: hidden;
   }
-  @media (-moz-os-version: windows-win7),(-moz-os-version:windows-win10){
-    :root[sizemode="maximized"] > head > title { padding-top: 10px }
+  head > * {
+    display: none;
+  }
+  head > title {
+    display: contents;
+    max-width: 50vw;
+    white-space: nowrap;
+  }
+  @media (-moz-os-version: windows-win7), (-moz-os-version: windows-win10) {
+    :root[sizemode="maximized"] > head > title {
+      padding-top: 10px;
+    }
   }
 }

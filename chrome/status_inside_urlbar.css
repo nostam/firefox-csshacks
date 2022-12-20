@@ -93,7 +93,7 @@ As a workaround, the -moz-element background image is removed somewhat often whi
 
 /*
  Don't show common values to save space (useful for oneliner)
- If you change the font size of the label then you'll have to modify these too 
+ If you change the font size of the label then you'll have to modify these too
  non-https links get a slight red hue
 */
 
@@ -107,6 +107,9 @@ As a workaround, the -moz-element background image is removed somewhat often whi
 
 /* Center the statuspanel text. This might be useful with centered urlbar text */
 /*
-#statuspanel-inner > #statuspanel-label{ text-align: center }
+#statuspanel-label{
+  text-align: center;
+  -moz-box-pack: center;
+}
 .urlbar-input-box::after{ background-position-x: center !important; }
 */
