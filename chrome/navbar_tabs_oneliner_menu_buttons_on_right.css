@@ -23,8 +23,12 @@ Window controls will be all wrong without it
   #scrollbutton-up,#scrollbutton-down{ border-block-width: 2px !important; }
 }
 /* reserved space for overflow + menu buttons */
-#navigator-toolbox{--uc-buttons-width: calc(56px + 4 * var(--toolbarbutton-outer-padding) + var(--uc-menubutton-padding,6px))}
-#nav-bar:not([overflowing]) > #nav-bar-customization-target{ --uc-buttons-width: calc(28px + 2 * var(--toolbarbutton-outer-padding) + 6px) }
+#navigator-toolbox{
+  --uc-buttons-width: calc(96px + 5 * var(--toolbarbutton-outer-padding) + var(--uc-menubutton-padding,6px))
+}
+#nav-bar:not([nonemptyoverflow="true"]) > #nav-bar-customization-target{
+  --uc-buttons-width: calc(64px + 4 * var(--toolbarbutton-outer-padding) + 6px)
+}
 /* Override for other densities */
 :root[uidensity="compact"] #navigator-toolbox{
   --uc-toolbar-height: 34px;
@@ -49,6 +53,7 @@ Window controls will be all wrong without it
 #TabsToolbar{
   margin-left: var(--uc-navigationbar-width);
   --tabs-navbar-shadow-size: 0px;
+  color: var(--toolbar-color);
 }
 
 #tabbrowser-tabs{
@@ -78,7 +83,11 @@ Window controls will be all wrong without it
   position: relative !important;
   z-index: 2
 }
-.titlebar-placeholder[type="post-tabs"],
+
+:root[sizemode="fullscreen"] #TabsToolbar > .titlebar-spacer[type="post-tabs"]{
+  display: flex !important;
+}
+
 .titlebar-spacer[type="post-tabs"]{
   width: calc(var(--uc-buttons-width) + var(--uc-window-drag-space-post)) !important;
 }

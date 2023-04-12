@@ -31,16 +31,18 @@ See the above repository for updates as well as full license text. */
     padding-left: 30px !important;
   }
 
-  #TabsToolbar > .toolbar-items{ max-width: calc(100vw - 138px) }
+  :root[sizemode="normal"] :where(.titlebar-spacer){ display: flex !important; }
+
+  #TabsToolbar > .toolbar-items{ max-width: calc(100vw - 138px); flex-grow: 1 }
   #TabsToolbar > .titlebar-buttonbox-container{
-    display: block !important;
-    float: right !important;
+    display: flex !important;
   }
 
   #toolbar-menubar:not([customizing]){
     margin-top: 40px;
     width: 30px;
     -moz-box-orient: vertical;
+    flex-direction: column;
     flex-grow: 1;
     background-color: var(--lwt-accent-color);
   }
@@ -52,6 +54,7 @@ See the above repository for updates as well as full license text. */
 
   #toolbar-menubar:not([customizing]) #main-menubar{
     -moz-box-orient: vertical;
+    flex-direction: column;
     margin-left: -40px;
     background-color: var(--lwt-accent-color);
   }

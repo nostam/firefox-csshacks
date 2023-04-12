@@ -1,93 +1,110 @@
-'use strict';
+"use strict";
 
-let DB = null;
-
-function initDB(obj){
-  DB = obj;
-  Object.defineProperty(DB,"query",{value:function (q,list){
+const DB = new (function () {
+  this.content = null;
+  this.query = (q, list) => {
     let nlist = [];
-    for(let key of list || this.keys){
-      if(this[key].includes(q)){
-        nlist.push(key)
+    for (let key of list || this.keys) {
+      if (this.content[key].includes(q)) {
+        nlist.push(key);
       }
     }
-    return nlist
-  }});
-  Object.defineProperty(DB,"keys",{value:(Object.keys(DB).sort())});
-  
-  Object.defineProperty(DB,"getTagsForFile",{value:function(name){return this[name]}});
-  
-  return true
+    return nlist;
+  };
+  this.init = (obj) => {
+    this.content = obj;
+  };
+  this._keys = null;
+  Object.defineProperty(this, "keys", {
+    get: () => {
+      if (this.content && !this._keys) {
+        this._keys = Object.keys(this.content).sort();
+      }
+      return this._keys;
+    },
+  });
+  this.getTagsForFile = (name) => {
+    return this.content[name];
+  };
+})();
+
+function initDB(obj) {
+  window.DB = DB;
+  DB.init(obj.content);
 }
 
-function fetchWithType(url){
-  return new Promise((resolve,reject)=>{
-    const ext = url.substring(url.lastIndexOf(".")+1);
-    let expected = (ext === "json") ? "application/json" : (ext === "css") ? "text/css" : null;
-    if(!expected){
+function fetchWithType(url) {
+  return new Promise((resolve, reject) => {
+    const ext = url.substring(url.lastIndexOf(".") + 1);
+    let expected =
+      ext === "json" ? "application/json" : ext === "css" ? "text/css" : null;
+    if (!expected) {
       reject("unsupported file extension");
     }
-    fetch(url)
-    .then(response =>{
-      const contentType = response.headers.get('content-type');
-      if (!contentType || !contentType.includes(expected)) {
-        reject(`Oops, we got ${contentType} but expected ${expected}`);
-      }
-      if(ext === "json"){
-        response.json()
-        .then(resolve)
-      }else{
-        response.text()
-        .then(resolve)
-        
-      }
-    },except => reject(except))
+    fetch(url).then(
+      (response) => {
+        const contentType = response.headers.get("content-type");
+        if (!contentType || !contentType.includes(expected)) {
+          reject(`Oops, we got ${contentType} but expected ${expected}`);
+        }
+        if (ext === "json") {
+          response.json().then(resolve);
+        } else {
+          response
+            .text()
+            .then((text) => resolve({ file: url, content: text, name: url }));
+        }
+      },
+      (except) => reject(except)
+    );
   });
 }
 
-let currentCategory = new (function(){
+let currentCategory = new (function () {
   let currentPrimaryNode = null;
   let currentSecondaryNode = null;
   // TODO make filenames store ONLY the top level fileNames
-  // 
-  
+  //
+
   let currentTopLevelFileNames = null;
-  
-  this.set = function(t,secondary){
-    if(secondary){
-      currentSecondaryNode && currentSecondaryNode.classList.remove("currentCategory");
+
+  this.set = function (t, secondary) {
+    if (secondary) {
+      currentSecondaryNode &&
+        currentSecondaryNode.classList.remove("currentCategory");
       currentSecondaryNode = t;
       currentSecondaryNode.classList.add("currentCategory");
-    }else{
-      currentPrimaryNode && currentPrimaryNode.classList.remove("currentCategory");
+    } else {
+      currentPrimaryNode &&
+        currentPrimaryNode.classList.remove("currentCategory");
       currentPrimaryNode = t;
       currentPrimaryNode.classList.add("currentCategory");
-      
-      currentSecondaryNode && currentSecondaryNode.classList.remove("currentCategory");
+
+      currentSecondaryNode &&
+        currentSecondaryNode.classList.remove("currentCategory");
       currentSecondaryNode = null;
     }
-    if(!secondary){
+    if (!secondary) {
       currentTopLevelFileNames = DB.query(t.textContent);
     }
-
   };
-  
-  this.getFileNames = function(node,secondary){
-    if(secondary){
-      return DB.query(node.textContent,currentTopLevelFileNames)
-    }
-    return currentTopLevelFileNames
-  }
-  return this
-})()
 
-function getText(node){
-  return `${node.textContent}.css`
+  this.getFileNames = function (node, secondary) {
+    if (secondary) {
+      return DB.query(node.textContent, currentTopLevelFileNames);
+    }
+    return currentTopLevelFileNames;
+  };
+  return this;
+})();
+
+function getText(node) {
+  return `${node.textContent}.css`;
 }
 
-function getSecondaryCategories(list){
+function getSecondaryCategories(list) {
   let a = [];
-  for (let file of list){
+  for (let file of list) {
     a.push(DB.getTagsForFile(file));
   }
   a = a.flat();
@@ -95,91 +112,127 @@ function getSecondaryCategories(list){
   let ret = [];
   let i = 0;
   ret[0] = a[0];
-  for(let f of a){
-    if(ret[i] != f){
-      ret[++i] = f
+  for (let f of a) {
+    if (ret[i] != f) {
+      ret[++i] = f;
     }
   }
-  return ret
+  return ret;
 }
 
-function clearCodeBlock(){
-  const pre = document.getElementById("previewBox");
-  for(let el of Array.from(pre.childNodes)){
-    pre.removeChild(el)
+function showMatchingTargets(fileNames, setSelected = false) {
+  {
+    let ui = document.getElementById("ui");
+    if (ui.classList.contains("no-content")) {
+      ui.classList.remove("no-content");
+    }
   }
-  return
-}
-
-function showMatchingTargets(fileNames){
   let bonus = 0;
-  for(let c of Array.from(document.querySelectorAll(".target"))){
-    if(fileNames.includes(getText(c))){
-      c.classList.remove("hidden")
-    }else{
-      if(c.classList.contains("selected")){
-        bonus++
-      }else{
+  for (let c of Array.from(document.querySelectorAll(".target"))) {
+    if (fileNames.includes(c.dataset.filename)) {
+      c.classList.remove("hidden");
+      setSelected && selectedTarget.add(c);
+    } else {
+      if (c.classList.contains("selected")) {
+        bonus++;
+      } else {
         c.classList.add("hidden");
       }
-      
     }
     //fileNames.includes(getText(c)) ? c.classList.remove("hidden") : c.classList.add("hidden");
   }
-  document.getElementById("targets").setAttribute("style",`--grid-rows:${Math.ceil(fileNames.length/3)}`)
+  const container = document.getElementById("targets");
+  const width = container.getBoundingClientRect().width;
+  const horizontal_items = Math.max(1, Math.min(Math.floor(width / 180), 4));
+  const real_items = fileNames.length + bonus;
+  const full_rows = Math.ceil(real_items / horizontal_items);
+  document
+    .getElementById("targets")
+    .setAttribute(
+      "style",
+      `--grid-rows:${full_rows};--grid-columns:${Math.ceil(
+        real_items / full_rows
+      )}`
+    );
 }
 
-function onCategoryClicked(categoryNode,isSecondary = false){
-  
-  //clearCodeBlock();
-  currentCategory.set(categoryNode,isSecondary);
-  
+function onCategoryClicked(categoryNode, isSecondary = false) {
+  currentCategory.set(categoryNode, isSecondary);
+
   let secondaryCategoriesNode = document.querySelector("#secondaryCategories");
-  let fileNames = currentCategory.getFileNames(categoryNode,isSecondary);
-  if(!isSecondary){
-    
-    if(fileNames.length > 9){
+  let fileNames = currentCategory.getFileNames(categoryNode, isSecondary);
+  if (!isSecondary) {
+    if (fileNames.length > 9 && categoryNode.textContent != "legacy") {
       let matchingSecondaries = getSecondaryCategories(fileNames);
-      for(let child of Array.from(secondaryCategoriesNode.children)){
-        matchingSecondaries.includes(child.textContent) ? child.classList.remove("hidden") : child.classList.add("hidden")
+      for (let child of Array.from(secondaryCategoriesNode.children)) {
+        matchingSecondaries.includes(child.textContent)
+          ? child.classList.remove("hidden")
+          : child.classList.add("hidden");
       }
       document.getElementById("categories").classList.add("blurred");
-    }else{
+    } else {
       document.getElementById("categories").classList.remove("blurred");
-      
     }
   }
   showMatchingTargets(fileNames);
-  return
+  return;
 }
 
-async function onTargetClicked(target,append = false){
+async function onTargetClicked(target, append = false) {
   const codeBlock = document.querySelector("pre");
-  const text = typeof target === "string"
-              ? target
-              : getText(target);
-  
+  const text = typeof target === "string" ? target : target.dataset.filename;
+
   fetchWithType(`chrome/${text}`)
-  //.then(text => (codeBlock.textContent = text))
-  .then(text => Highlighter.parse(codeBlock,text,append))
-  .catch(e => console.log(e))
+    //.then(text => (codeBlock.textContent = text))
+    .then((text) => Highlighter.parse(codeBlock, text, append))
+    .catch((e) => console.log(e));
 }
 
-function onSomeClicked(e){
+function onFilenameClicked(box, ctrlKey) {
+  if (typeof box === "string") {
+    box = document.querySelector(`.target[title="${box}"]`);
+  }
+  if (!box) {
+    return;
+  }
+  if (!box.classList.contains("selected")) {
+    if (ctrlKey && selectedTarget.getIt()) {
+      selectedTarget.add(box);
+    } else {
+      selectedTarget.set(box);
+    }
+    onTargetClicked(box, ctrlKey);
+    selectedTarget.setUrlSearchParams();
+  } else {
+    if (ctrlKey) {
+      selectedTarget.deselect(box);
+      let previewbox = document.getElementById("previewBox");
+      let preview = previewbox.getNamedSection(
+        `chrome/${box.dataset.filename}`
+      );
+      if (preview) {
+        preview.remove();
+      }
+      selectedTarget.setUrlSearchParams();
+    }
+  }
+}
+
+function onSomeClicked(e) {
   let cl = e.target.parentNode.id;
-  switch(cl){
+  switch (cl) {
     case "categories":
       onCategoryClicked(e.target);
       break;
     case "secondaryCategories":
-      onCategoryClicked(e.target,true/* isSecondary */);
+      onCategoryClicked(e.target, true /* isSecondary */);
       break;
     case "targets":
-      if(!e.target.classList.contains("selected")){
-        if(e.ctrlKey && selectedTarget.getIt()){
+      if (!e.target.classList.contains("selected")) {
+        if (e.ctrlKey && selectedTarget.getIt()) {
           selectedTarget.add(e.target);
-          onTargetClicked(e.target,true);
-        }else{
+          onTargetClicked(e.target, true);
+        } else {
           selectedTarget.set(e.target);
           onTargetClicked(e.target);
         }
@@ -190,72 +243,84 @@ function onSomeClicked(e){
   }
 }
 
-const selectedTarget = new(function(){
+const selectedTarget = new (function () {
   const selected = new Set();
   this.set = (el) => {
     this.clear();
     el.classList.add("selected");
     selected.add(el);
-  }
-  this.getIt = () =>{ return selected.values().next().value };
+  };
+  this.getIt = () => {
+    return selected.values().next().value;
+  };
   this.add = (el) => {
     selected.add(el);
     el.classList.add("selected");
   };
   this.deselect = (el) => {
     el.classList.remove("selected");
-    return selected.delete(el)
+    return selected.delete(el);
   };
   this.clear = () => {
-    selected.forEach(el=>el.classList.remove("selected"));
+    selected.forEach((el) => el.classList.remove("selected"));
     selected.clear();
-    return true
-  }
+    return true;
+  };
+  this.setUrlSearchParams = () => {
+    let t = [];
+    for (let value of selected.values()) {
+      t.push(value.getAttribute("title") + ".css");
+    }
+    history.replaceState(
+      state_object,
+      "",
+      `?file=${t.map(encodeURIComponent).join(",")}`
+    );
+  };
 })();
 
-function createCategories(){
-  
+function createCategories() {
   const CAT_PARENT = document.getElementById("categories");
   const CAT_SECOND = document.getElementById("secondaryCategories");
-  CAT_PARENT.addEventListener("click",onSomeClicked,{passive:true});
-  CAT_SECOND.addEventListener("click",onSomeClicked,{passive:true});
-  
+  CAT_PARENT.addEventListener("click", onSomeClicked, { passive: true });
+  CAT_SECOND.addEventListener("click", onSomeClicked, { passive: true });
+
   const TAR_PARENT = document.getElementById("targets");
-  TAR_PARENT.addEventListener("click",onSomeClicked,{passive:true});
-  
-  const createNode = function(name,type){
+  TAR_PARENT.addEventListener("click", onSomeClicked, { passive: true });
+
+  const createNode = function (name, type, isDeprecated) {
     let node = document.createElement("div");
     node.classList.add(type);
-    if(type === "target"){
-      
+    if (type === "target") {
       let link = node.appendChild(document.createElement("a"));
       node.classList.add("hidden");
-      link.href = `https://github.com/MrOtherGuy/firefox-csshacks/tree/master/chrome/${name}`;
+      link.href = `https://github.com/MrOtherGuy/firefox-csshacks/tree/master/chrome/${
+        isDeprecated ? "deprecated/" : ""
+      }${name}`;
       link.title = "See on Github";
       link.target = "_blank";
-      const content = name.substring(0,name.lastIndexOf("."));
-      node.append(content);
-      node.setAttribute("title",content);
-    }else{
+      const content = name.substring(0, name.lastIndexOf("."));
+      node.appendChild(document.createElement("span")).textContent = content;
+      node.dataset.filename = `${content}.css`;
+      node.setAttribute("title", content);
+    } else {
       node.textContent = name.name;
-      name.value > 0 && node.setAttribute("data-value",name.value);
+      name.value > 0 && node.setAttribute("data-value", name.value);
     }
-    
-    return node;
-  }
-  
-  const createCategory = name => createNode(name,"category");
-  
-  const createTarget = name => createNode(name,"target");
 
-  const CAT_NAMES = (function(){
+    return node;
+  };
+
+  const CAT_NAMES = (function () {
     let list = [];
-    
-    for(let key of Object.keys(DB)){
-      TAR_PARENT.appendChild(createNode(key,"target"));
-      let things = DB[key];
-      for(let t of things){
-        list.push(t)
+
+    for (let key of DB.keys) {
+      let things = DB.content[key];
+      TAR_PARENT.appendChild(
+        createNode(key, "target", things.includes("legacy"))
+      );
+      for (let t of things) {
+        list.push(t);
       }
     }
     list.sort();
@@ -263,340 +328,98 @@ function createCategories(){
     let ns = [0];
     ret[0] = list[0];
     let i = 0;
-    for(let item of list){
-      if(ret[i]!=item){
-        ret[++i]=item;
-        ns[i]=0;
-      }else{
-        ns[i] += (item === "legacy" ? -1 : 1);
+    for (let item of list) {
+      if (ret[i] != item) {
+        ret[++i] = item;
+        ns[i] = 0;
+      } else {
+        ns[i] += item === "legacy" ? -1 : 1;
       }
     }
-    let map = ret.map((a,i)=>({name:a,value:ns[i]+1}))
-    return map
+    let map = ret.map((a, i) => ({ name: a, value: ns[i] + 1 }));
+    return map;
     //return map.sort((a,b)=>(a.value > b.value?-1:a.value < b.value ? 1:0))
   })();
-  
-  for(let cat of CAT_NAMES){
-  //  CAT_PARENT.appendChild(createCategory(cat.name))
-    CAT_PARENT.appendChild(createNode(cat,"category"));
-    CAT_SECOND.appendChild(createNode(cat,"category"));
+
+  for (let cat of CAT_NAMES) {
+    //  CAT_PARENT.appendChild(createCategory(cat.name))
+    CAT_PARENT.appendChild(createNode(cat, "category"));
+    CAT_SECOND.appendChild(createNode(cat, "category"));
   }
-  
 }
 
-const Highlighter = new(function(){
-
-  const state = new (function(){
-    let current = 0;
-    let previous = 0;
-    this.now = ()=>current;
-    this.previous = ()=>previous;
-    this.set = function(a){ previous = current; current = a; return} 
-  })();
-  
-  let pointer = 0;
-  let token = "";
-  
-  const selectorToClassMap = new Map([
-  [":","pseudo"],
-  ["#","id"],
-  [".","class"],
-  ["[","attribute"]]);
-
-  this.parse = function(targetNode,text,appendMode){
-    
-    !appendMode && clearCodeBlock();
-    let node = appendMode ? targetNode.firstChild : document.createElement("div");
-    
-    function createNewRuleset(){
-      let ruleset = document.createElement("span");
-      ruleset.className = "ruleset";
-      node.appendChild(ruleset);
-      return ruleset
-    }
-    
-    let rulesetUnderConstruction = createNewRuleset();
-
-    function createElementFromToken(type,c){
-      if(token.length === 0 && !c){
-        return
-      }
-      let n = document.createElement("span");
-      
-      switch(type){
-        case "selector":
-        // This isn't exactly correct, but it works because parser treats \r\n sequences that follow a closed comment as "selector"
-          rulesetUnderConstruction = createNewRuleset();
-          let parts = token.split(/([\.#:\[]\w[\w-_"'=\]]*|\s\w[\w-_"'=\]]*)/);
-        
-          for(let part of parts){
-            if(part.length === 0){
-              continue
-            }
-            let c = part[0];
-            switch (c){
-              case ":":
-              case "#":
-              case "[":
-              case ".":
-                let p = n.appendChild(document.createElement("span"));
-                p.className = selectorToClassMap.get(c);
-                p.textContent = part;
-                break;
-              default:
-                n.append(part);
-            }
-          }
-          break
-        case "comment":
-          let linksToFile = token.match(/[\w-\.]+\.css/g);
-          if(linksToFile && linksToFile.length){
-            let linkIdx = 0;
-            let fromIdx = 0;
-            while(linkIdx < linksToFile.length){
-              let part = linksToFile[linkIdx++];
-              let idx = token.indexOf(part);
-              n.append(token.substring(fromIdx,idx));
-              let link = document.createElement("a");
-              link.textContent = part;
-              link.href = `https://github.com/MrOtherGuy/firefox-csshacks/tree/master/chrome/${part}`;
-              link.target = "_blank";
-              n.appendChild(link);
-              fromIdx = idx + part.length;
-            }
-            n.append(token.substring(fromIdx));
-          }else{
-            n.textContent = c || token;
-          }
-          break;
-        case "value":
-          let startImportant = token.indexOf("!");
-          if(startImportant === -1){
-            n.textContent = c || token;
-          }else{
-            n.textContent = token.substr(0,startImportant);
-            let importantTag = document.createElement("span");
-            importantTag.className = "important-tag";
-            importantTag.textContent = "!important";
-            n.appendChild(importantTag);
-            if(token.length > (9 + startImportant)){
-              n.append(";")
-            }
-          }
-          break;
-        case "function":
-          n.textContent = c || token.slice(0,-1);
-          break
-        default:
-          n.textContent = c || token;
-      }
-      
-      n.className = (`token ${type}`);
-      token = "";
-      rulesetUnderConstruction.appendChild(n);
-      return
-    }
-    
-    let c;
-    let functionValueLevel = 0;
-    let curly = false;
-    while(pointer < text.length){
-      c = text[pointer];
-      
-      const currentState = state.now();
-      curly = currentState != 2 && (c === "{" || c === "}");
-      if(!curly){
-        token+=c;
-      }
-      switch(currentState){
-      
-        case 0:
-          switch(c){
-            case "/":
-              if(text[pointer+1] === "*"){
-                state.set(2);
-                if(token.length > 1){
-                  token = token.slice(0,-1);
-                  createElementFromToken("selector");
-                  token += "/"
-                }
-              }
-              break;
-            case "{":
-              state.set(3);
-              createElementFromToken("selector");
-              break;
-            case "}":
-              createElementFromToken("text");
-              break;
-            case "@":
-              state.set(5);
-          }
-          
-          break;
-      
-        case 2:
-          switch(c){
-            case "*":
-              if(text[pointer+1] === "/"){
-                token += "/";
-                pointer++;
-                state.set(state.previous());
-                createElementFromToken("comment");
-              }
-          }
-          break;
-
-        case 3:
-          switch(c){
-            case "/":
-              if(text[pointer+1] === "*"){
-                state.set(2);
-              }
-              break;
-            case ":":
-              createElementFromToken("property");
-              state.set(4);
-              break;
-            case "}":
-              createElementFromToken("text");
-              state.set(0);
-          }
-          break;
-        case 4:
-          switch(c){
-            case ";":
-              createElementFromToken("value");
-              state.set(3);
-              break;
-            case "}":
-              createElementFromToken("value");
-              state.set(0);
-              break;
-            case "(":
-              createElementFromToken("value");
-              functionValueLevel++;
-              state.set(7);
-          }
-          break;
-        case 5:
-          switch(c){
-            case " ":
-              createElementFromToken("atrule");
-              state.set(6);
-          }
-          break;
-        case 6:
-          switch(c){
-            case ";":
-            case "{":
-              createElementFromToken("atvalue");
-              state.set(0);
-          }
-          break
-        case 7:
-          switch(c){
-            case ")":
-              functionValueLevel--;
-              if(functionValueLevel === 0){
-                createElementFromToken("function");
-                token = ")";
-                state.set(4);
-              }
-              break;
-            case "}":
-              functionValueLevel = 0;
-              state.set(0)
-          }
-        default:
-          false
-      }
-      
-      curly && createElementFromToken("curly",c);
-      
-      pointer++
-    }
-    createElementFromToken("text");
-    token = "";
-    state.set(0);
-    pointer = 0;
-    
-    targetNode.appendChild(node);
-    
-    return
-  }
-  return this
-})();
-
-async function handleSearchQuery(){
-  let params = (new URL(document.location)).searchParams;
+async function handleSearchQuery() {
+  let params = new URL(document.location).searchParams;
   let param = params.get("tag");
-  if(param){
+  if (param) {
     let cats = document.querySelectorAll("#categories > .category");
-    for(let cat of cats){
-      if(cat.textContent === param){
+    for (let cat of cats) {
+      if (cat.textContent === param) {
         onCategoryClicked(cat);
-        return
+        return;
       }
     }
-    return
+    return;
   }
   param = params.get("file");
-  if(param){
-    let files = param.split(",").filter(a => DB.keys.includes(a));
-    
-    if(files.length === 0 ){
-      return
+  if (param) {
+    let files = param.split(",").filter((a) => DB.keys.includes(a));
+    let box = document.getElementById("previewBox");
+    if (files.length === 0) {
+      return;
     }
 
-    const codeBlock = document.querySelector("pre");   
-    const promises = files.map(file=>fetchWithType(`chrome/${file}`).catch(e=>""));
-    
-    Promise.all(promises)
-    .then(responses => {
+    const promises = files.map((file) =>
+      fetchWithType(`chrome/${file}`).catch((e) => "")
+    );
+
+    Promise.all(promises).then((responses) => {
       showMatchingTargets(files);
-      Highlighter.parse(codeBlock,responses.join("\n\n/*************************************/\n\n"))
+      Highlighter.parse(
+        codeBlock,
+        responses.join("\n\n/*************************************/\n\n")
+      );
     });
-    
   }
 }
 
-function showUI(){
+function showUI() {
   document.getElementById("placeholder").remove();
   document.getElementById("ui").classList.remove("hidden");
 }
 
-function waitForDelay(t){
+function waitForDelay(t) {
   t = Number(t) || 10;
-  return new Promise(res =>{
-    setTimeout(res,t)
-  })
+  return new Promise((res) => {
+    setTimeout(res, t);
+  });
 }
 
-document.onreadystatechange = (function () {
-  
+document.onreadystatechange = function () {
   if (document.readyState === "complete") {
-    function linkClicked(ev){
-      if(ev.target instanceof HTMLAnchorElement){
+    function linkClicked(ev) {
+      if (ev.target instanceof HTMLAnchorElement) {
         let ref = ev.target.href;
-        if(!ref){
-          return
+        if (!ref) {
+          return;
         }
         let fileName = ref.slice(ref.lastIndexOf("/"));
-        if(fileName.endsWith(".css")){
+        if (fileName.endsWith(".css")) {
           onTargetClicked(fileName);
           ev.preventDefault();
         }
       }
     }
-    document.getElementById("previewBox").addEventListener("click",linkClicked);
-    
+    document
+      .getElementById("previewBox")
+      .addEventListener("click", linkClicked);
+
     fetchWithType("html_resources/tagmap.json")
-    .then(initDB)
-    .then(createCategories)
-    .then(handleSearchQuery)
-    .then(()=>waitForDelay(300))
-    .then(showUI)
-    .catch(e => console.log(e))
+      .then(initDB)
+      .then(createCategories)
+      .then(handleSearchQuery)
+      .then(() => waitForDelay(300))
+      .then(showUI)
+      .catch((e) => console.log(e));
   }
-});
+};

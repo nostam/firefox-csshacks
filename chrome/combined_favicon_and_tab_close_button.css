@@ -4,8 +4,9 @@ See the above repository for updates as well as full license text. */
 /* Show tab close button when cursor is over the tab icon */
 
 .tab-close-button{
-  -moz-box-ordinal-group: 0;
-  display: -moz-box !important;
+  -moz-box-ordinal-group: 0; /* Firefox <112 compatibility */
+  order: -1;
+  display: flex !important;
   position: relative;
   margin-inline: -1px -19px !important;
   z-index: -1;
