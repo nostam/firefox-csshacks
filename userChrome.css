@@ -2,7 +2,8 @@
 
 /* Import your desired components first */
 
-@import url(chrome/navbar_tabs_responsive_oneliner.css);
+/* @import url(chrome/navbar_tabs_responsive_oneliner.css); */
+@import url(chrome/tabs_on_bottom.css);
 @import url(chrome/compact_proton.css);
 @import url(chrome/tab_close_button_always_on_hover.css);
 @import url(chrome/hide_urlbar_first_row.css);
@@ -19,6 +20,10 @@
   --custom-font: "Noto Sans CJK JP", "Noto Sans CJK TC" !important;
   /* --custom-accent-drk: #2b2550;
   --custom-accent-lwt: rgba(246, 224, 1, 0.8); */
+}
+
+#nav-bar {
+  width: calc(100% - 90px);
 }
 
 #sidebar-box {
@@ -120,5 +125,10 @@ spacer[part="overflow-end-indicator"] {
 
 /* Hide windows share btn in menu */
 .share-tab-url-item {
+  display: none !important;
+}
+
+/* hide folder icon in bookmark toolbar */
+#personal-bookmarks .bookmark-item > .toolbarbutton-icon {
   display: none !important;
 }

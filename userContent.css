@@ -1,12 +1,12 @@
 @import "addonpage.css";
 :root {
-  --addon-icon-size: 24px !important;
-  --card-padding: 14px !important;
-  scrollbar-width: thin !important;
+  --addon-icon-size: 24px;
+  --card-padding: 14px;
+  scrollbar-width: thin;
   /*scrollbar-color: #101010 #303030;*/
 }
 
 * {
-  scrollbar-width: thin !important;
-  scrollbar-color: #b999e9 transparent !important;
+  scrollbar-width: thin;
+  scrollbar-color: #b999e9 transparent;
 }
