@@ -7,7 +7,14 @@ See the above repository for updates as well as full license text. */
   --uei-icon-size: 16px;
 }
 .unified-extensions-item-menu-button.subviewbutton{
-  padding: 2px !important;
+  padding: 0px !important;
+  margin-inline-end: 0 !important;
+}
+.unified-extensions-item-action-button.subviewbutton{
+  padding-block: 6px !important;
+}
+.unified-extensions-item-menu-button.subviewbutton > .toolbarbutton-icon{
+  padding: 4px !important;
 }
 .unified-extensions-item-message-deck{
   display: none
@@ -15,9 +22,6 @@ See the above repository for updates as well as full license text. */
 #unified-extensions-view > vbox > vbox > .unified-extensions-item{
   padding-block: 0px !important;
 }
-.unified-extensions-item-menu-button{
-  margin-inline-end: 0 !important;
-}
-.unified-extensions-list .unified-extensions-item-menu-button{
-  margin-inline-end: 8px !important;  
+#unified-extensions-panel .unified-extensions-item{
+  margin-block: 0 !important;
 }

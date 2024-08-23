@@ -20,9 +20,14 @@ Window controls will be all wrong without it
   --uc-toolbar-height: 40px;
   --uc-urlbar-min-width: 50vw; /* minimum width for opened urlbar */
 }
-@media (-moz-proton){
-  #scrollbutton-up,#scrollbutton-down{ border-block-width: 2px !important; }
+#titlebar{
+  will-change: unset !important;
+  transition: none !important;
+  opacity: 1 !important;
 }
+#scrollbutton-up,
+#scrollbutton-down{ border-block-width: 2px !important; }
+
 /* Override for other densities */
 :root[uidensity="compact"] #navigator-toolbox{ --uc-toolbar-height: 34px;}
 :root[uidensity="touch"] #navigator-toolbox{ --uc-toolbar-height: 44px; }
@@ -31,8 +36,8 @@ Window controls will be all wrong without it
   --urlbar-container-height: var(--uc-toolbar-height) !important;
   padding-block: 0 !important;
 }
-:root[uidensity=compact] #urlbar{
-  --urlbar-toolbar-height: var(--uc-toolbar-height) !important;
+:root[uidensity="compact"] #urlbar{
+  --urlbar-container-height: var(--uc-toolbar-height) !important;
 }
 
 /* prevent urlbar overflow on narrow windows */
@@ -75,20 +80,12 @@ Window controls will be all wrong without it
 #nav-bar::before{ display:none !important }
 
 /* Rules specific to window controls on left layout */
-@media (-moz-platform: macos),
+@media (-moz-bool-pref: "userchrome.force-window-controls-on-left.enabled"),
+       (-moz-platform: macos),
        (-moz-gtk-csd-reversed-placement){
   :root:not([inFullscreen]) #TabsToolbar-customization-target > .titlebar-spacer[type="pre-tabs"]{
     width: var(--uc-window-drag-space-post) !important;
-    display: flex !important; 
-  }
-  #TabsToolbar > .titlebar-buttonbox-container{
-    display: flex;
-  }
-}
-@supports -moz-bool-pref("userchrome.force-window-controls-on-left.enabled"){
-  :root:not([inFullscreen]) #TabsToolbar-customization-target > .titlebar-spacer[type="pre-tabs"]{
-    width: var(--uc-window-drag-space-post) !important;
-    display: flex !important; 
+    display: flex !important;
   }
   #TabsToolbar > .titlebar-buttonbox-container{
     display: flex;

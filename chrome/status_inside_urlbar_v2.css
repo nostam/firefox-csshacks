@@ -52,10 +52,10 @@ As a workaround, the -moz-element background image is removed somewhat often whi
   background-position-y: 3px;
 }
 
-#statuspanel-inner > #statuspanel-label {
-  height: 3em;
-  min-width: 1000px;
-  background-color: var(--toolbar-field-background-color, #fffc) !important;
+#statuspanel-label{
+  height:3em;
+  min-width: calc(100vw);
+  background-color: var(--toolbar-field-background-color) !important;
   border: none !important;
   font-size: 1.15em;
   color: inherit !important;
@@ -89,7 +89,6 @@ As a workaround, the -moz-element background image is removed somewhat often whi
 /*
 #statuspanel-label{
   text-align: center;
-  -moz-box-pack: center;
   justify-content: center;
 }
 .urlbar-input-box::after{ background-position-x: center !important; }

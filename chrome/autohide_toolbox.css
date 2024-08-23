@@ -15,25 +15,12 @@ See the above repository for updates as well as full license text. */
   --uc-toolbox-rotation: 89deg;
 }
 
-@media  (-moz-platform: windows),
-        (-moz-os-version: windows-win7),
-        (-moz-os-version: windows-win10){
-
-  @media screen and (min-resolution: 1.25dppx){
-    :root[tabsintitlebar][sizemode="maximized"]:not([inDOMFullscreen]) > body > box{ margin-top: 7px !important; }
-  }
-  @media screen and (min-resolution: 1.5dppx){
-    :root[tabsintitlebar][sizemode="maximized"]:not([inDOMFullscreen]) > body > box{ margin-top: 7px !important; }
-  }
-  @media screen and (min-resolution: 2dppx){
-    :root[tabsintitlebar][sizemode="maximized"]:not([inDOMFullscreen]) > body > box{ margin-top: 6px !important; }
-    :root[tabsintitlebar][sizemode="maximized"] #navigator-toolbox{ margin-top: -1px; }
-  }
-  #navigator-toolbox:not(:-moz-lwtheme){ background-color: -moz-dialog !important; }
+@media  (-moz-platform: windows){
+  :root:not([lwtheme]) #navigator-toolbox{ background-color: -moz-dialog !important; }
 }
 
 :root[sizemode="fullscreen"],
-#navigator-toolbox[inFullscreen]{ margin-top: 0 !important; }
+:root[sizemode="fullscreen"] #navigator-toolbox{ margin-top: 0 !important; }
 
 #navigator-toolbox{
   position: fixed !important;
@@ -49,11 +36,14 @@ See the above repository for updates as well as full license text. */
   pointer-events: none;
 }
 
-
-/* #mainPopupSet:hover ~ box > toolbox, */
-/* Uncomment the above line to make toolbar visible if some popup is hovered */
 #navigator-toolbox:hover,
 #navigator-toolbox:focus-within{
+  transition-delay: 33ms !important;
+  transform: rotateX(0);
+  opacity: 1;
+}
+/* This ruleset is separate, because not having :has support breaks other selectors as well */
+#mainPopupSet:has(> #appMenu-popup:hover) ~ toolbox{
   transition-delay: 33ms !important;
   transform: rotateX(0);
   opacity: 1;

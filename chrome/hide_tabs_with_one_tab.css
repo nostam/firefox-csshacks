@@ -55,7 +55,6 @@ This will NOT work correctly if you have hidden tabs such as with tab groups ext
 }
 @media (-moz-platform: linux){
   #TabsToolbar .titlebar-buttonbox{
-    -moz-box-align: stretch !important; /* Fx < 112 compatibility */
     align-items: stretch !important;
   }
   #TabsToolbar
@@ -70,7 +69,7 @@ This will NOT work correctly if you have hidden tabs such as with tab groups ext
   }
 }
 
-#tabbrowser-tabs:not([overflowing="true"]) ~ #alltabs-button {
+#tabbrowser-tabs:not([overflow]) ~ #alltabs-button{
   display: none;
 }
 

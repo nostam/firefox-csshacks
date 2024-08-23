@@ -26,7 +26,6 @@ See the above repository for updates as well as full license text. */
 }
 #appMenu-protonMainView > .panel-subview-body > toolbarbutton{
   flex-direction: column;
-  -moz-box-orient: vertical; /* Fx <112 compatibility */
 }
 
 :where(#appMenu-protonMainView) > .panel-subview-body > toolbarbutton.subviewbutton{
@@ -55,8 +54,6 @@ See the above repository for updates as well as full license text. */
 #appMenu-zoom-controls + toolbarseparator{ margin-block: 0 4px !important; }
 #appMenu-zoom-controls{ padding-block: 2px !important; }
 #appMenu-zoom-controls > :not(:last-child){
-  -moz-box-flex: 1 !important; /* Fx <112 compatibility */
-  -moz-box-pack: center !important; /* Fx <112 compatibility */
   flex-grow: 1 !important;
   justify-content: center !important;
   border-radius: 0 !important;
@@ -171,8 +168,6 @@ toolbarbutton#appMenu-help-button.subviewbutton.subviewbutton-iconic{
 #appMenu-quit-button2{
   background-color: var(--button-bgcolor) !important;
   border-radius: 0 !important;
-  -moz-box-orient: horizontal !important; /* Fx <112 compatibility */
-  -moz-box-pack: center !important; /* Fx <112 compatibility */
   flex-direction: row !important;
   justify-content: center !important;
   padding-block: 12px !important;

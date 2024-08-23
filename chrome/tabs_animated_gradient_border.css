@@ -59,8 +59,8 @@ Thanks to /u/skenera on reddit for suggesting animating background position and 
   background-color: var(--lwt-accent-color) !important;
 }
 
-.tabbrowser-tab{ padding: 2px 2px 0 2px !important; }
-.tabbrowser-tab:not([selected]){ min-height: calc(var(--tab-min-height) - 2px) !important; }
+.tabbrowser-tab:not([selected]){ min-height: calc(var(--tab-min-height) - 1px) !important;  }
+.tabbrowser-tab{ margin-inline-start: 0 !important; }
 
 
 .tabbrowser-tab[selected]{
