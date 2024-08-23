@@ -3,35 +3,31 @@
 /* Import your desired components first */
 
 /* @import url(chrome/navbar_tabs_responsive_oneliner.css); */
-@import url(chrome/tabs_on_bottom.css);
 @import url(chrome/compact_proton.css);
-@import url(chrome/tab_close_button_always_on_hover.css);
-@import url(chrome/hide_urlbar_first_row.css);
-/* @import url(chrome/minimal_popup_scrollbars.css); */
 @import url(chrome/dark_additional_windows.css);
-@import url(content/compact_addons_manager.css);
-@import url(chrome/urlbar_results_in_two_rows.css);
+@import url(chrome/vertical_context_navigation.css);
 
+/* Tabs */
+/* @import url(content/vertical_tabs); */
+@import url(chrome/tabs_on_bottom.css);
+@import url(chrome/tab_count_in_alltabs_button.css);
+@import url(chrome/tab_close_button_always_on_hover.css);
 /* @import url(chrome/overlay_tab_audio_icons.css); */
-/* Apply your custom modifications after imports */
 @import url(custom/audio_icon_overlay_on_favicon.css);
+
+/* URL */
+@import url(chrome/hide_urlbar_first_row.css);
+@import url(chrome/urlbar_results_in_two_rows.css);
+@import url(chrome/iconized_places_context_menu.css);
+
+/* Apply your custom modifications after imports */
 :root {
-  /* --toolbar-bgcolor: rgb(0, 0, 0) !important; */
   --custom-font: "Noto Sans CJK JP", "Noto Sans CJK TC" !important;
-  /* --custom-accent-drk: #2b2550;
-  --custom-accent-lwt: rgba(246, 224, 1, 0.8); */
 }
 
 #nav-bar {
-  width: calc(100% - 60px);  /* 90*/
+  width: calc(100% - 60px); /* 90*/
 }
-
-#sidebar-box {
-  --sidebar-background-color: var(--toolbar-bgcolor) !important;
-}
-/* window.sidebar-panel {
-  --lwt-sidebar-background-color: rgb(36, 44, 59) !important;
-} */
 
 /* Tiny window controller */
 .titlebar-button {
@@ -43,6 +39,11 @@
 }
 .toolbarbutton-1 {
   padding: 0 !important;
+}
+
+/* hide close windows button */
+.titlebar-button.titlebar-close {
+  display: none;
 }
 
 /* URL */
@@ -63,7 +64,7 @@
   padding: 2px !important;
 }
 /* #urlbar:focus-within[pageproxystate="invalid"] {
-  box-shadow: 0 0 0 1px black;
+box-shadow: 0 0 0 1px black;
 } */
 
 /* Tabs */
@@ -72,68 +73,13 @@
   font-size: 12px !important;
   font-weight: 500;
 }
-.tab-content {
-  padding-left: 6px !important;
-  padding-right: 6px !important;
-}
 
-.tab-content[soundplaying] .tab-label-container {
-  margin-left: -8px !important;
-}
-.tab-icon-stack .tab-icon-image {
-  opacity: 1 !important;
-}
-
-.tab-content[soundplaying] .tab-icon-image {
-  opacity: 0 !important;
-}
-/* .tabbrowser-tab[visuallyselected] > .tab-stack > .tab-background {
-  box-shadow: none !important;
-  border: 2px solid var(--custom-accent-lwt) !important;
-  background-image: none !important;
-} */
-
-/* .tab-background {} */
-.tab-throbber[busy] {
+/* .tab-throbber[busy] {
   color: var(--panel-banner-item-warning-icon-bgcolor) !important;
-}
+} */
 
 /* hide overflow indicator' separators*/
 spacer[part="overflow-start-indicator"],
 spacer[part="overflow-end-indicator"] {
   display: none !important;
-}
-
-/* fix for toolbar smaller than 34px */
-#scrollbutton-up,
-#scrollbutton-down {
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-}
-
-/* context line falls within tab border  */
-.tab-context-line {
-  margin: 1px 2px 0 !important;
-}
-
-/* make selected pop out from dark tabtoolbar bg*/
-.tab-background[selected="true"] {
-  box-shadow: 0px 0px 2px 1px black !important;
-  outline: 1px solid rgba(128, 128, 142, 0.25) !important;
-  outline-offset: -1px;
-}
-
-/* Hide windows share btn in menu */
-.share-tab-url-item {
-  display: none !important;
-}
-
-/* hide folder icon in bookmark toolbar */
-#personal-bookmarks .bookmark-item > .toolbarbutton-icon {
-  display: none !important;
-}
-
- /* hide close windows button */
-.titlebar-button.titlebar-close {
-	display: none
 }
