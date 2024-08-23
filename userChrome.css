@@ -23,7 +23,7 @@
 }
 
 #nav-bar {
-  width: calc(100% - 90px);
+  width: calc(100% - 60px);  /* 90*/
 }
 
 #sidebar-box {
@@ -131,4 +131,9 @@ spacer[part="overflow-end-indicator"] {
 /* hide folder icon in bookmark toolbar */
 #personal-bookmarks .bookmark-item > .toolbarbutton-icon {
   display: none !important;
+}
+
+ /* hide close windows button */
+.titlebar-button.titlebar-close {
+	display: none
 }
