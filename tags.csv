@@ -52,6 +52,7 @@ grid_overflow_menu.css,popup,menu
 hide_statuspanel_when_fullscreen.css,status,fullscreen,hiding
 hide_tabs_scrollbuttons.css,tabs,hiding,buttons,minimal
 hide_tabs_toolbar.css,hiding,tabs,toolbars
+hide_tabs_toolbar_v2.css,hiding,tabs,toolbars
 hide_tabs_toolbar_osx.css,tabs,toolbars,hiding,minimal
 hide_tabs_toolbar_w_alltabs_button.css,tabs,hiding,toolbars
 hide_tabs_with_one_tab.css,hiding,tabs,toolbars
@@ -137,6 +138,7 @@ tab_loading_progress_throbber.css,tab,icon,effect
 tab_separator_lines.css,tab,proton
 tabs_animated_gradient_border.css,hack,effect,tabs
 tabs_below_content.css,toolbars,tabs
+tabs_below_content_v2.css,toolbars,tabs
 tabs_fill_available_width.css,tab,tabs
 tabs_on_bottom.css,tabs,toolbars,classic
 tabs_on_bottom_menubar_on_top_patch.css,tabs,menubar,toolbars,classic,patch
@@ -175,3 +177,8 @@ window_control_placeholder_support.css,window-control,patch
 iconized_places_context_menu.css,menu,icon
 iconized_tabs_context_menu.css,menu,icon
 iconized_textbox_context_menu.css,menu,icon
+icon_only_context_menu_text_controls.css,menu,icons,hack
+tabs_on_bottom_v2.css,hack,tabs,toolbars
+oneline_toolbar.css,tabs,toolbars
+toolbars_below_content_v2.css,toolbars
+autohide_tabstoolbar_v2.css,tabs,toolbars,autohide
