@@ -8,25 +8,20 @@
 
 /* Tabs */
 /* @import url(content/vertical_tabs); */
-@import url(chrome/tabs_on_bottom.css);
+@import url(chrome/tabs_on_bottom_v2.css);
 @import url(chrome/tab_count_in_alltabs_button.css);
 @import url(chrome/tab_close_button_always_on_hover.css);
 @import url(chrome/tab_animated_active_border.css);
-/* @import url(chrome/overlay_tab_audio_icons.css); */
+/* @import url(chrome/inline_tab_audio_icons.css); */
 @import url(custom/audio_icon_overlay_on_favicon.css);
 
 /* URL */
 @import url(chrome/hide_urlbar_first_row.css);
 @import url(chrome/urlbar_results_in_two_rows.css);
 
-
 /* Apply your custom modifications after imports */
 :root {
   --custom-font: "Noto Sans CJK JP", "Noto Sans CJK TC" !important;
-}
-
-#nav-bar {
-  width: calc(100% - 60px); /* 90*/
 }
 
 /* Tiny window controller */
@@ -81,5 +76,10 @@ box-shadow: 0 0 0 1px black;
 /* hide overflow indicator' separators*/
 spacer[part="overflow-start-indicator"],
 spacer[part="overflow-end-indicator"] {
+  display: none !important;
+}
+
+/* hide windows share menu */
+menuitem.share-tab-url-item {
   display: none !important;
 }

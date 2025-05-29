@@ -1,0 +1,118 @@
+/* Source file https://github.com/MrOtherGuy/firefox-csshacks/tree/master/chrome/navbar_tabs_responsive_oneliner.css made available under Mozilla Public License v. 2.0
+See the above repository for updates as well as full license text. */
+
+/* Make tabs and navbar appear side-by-side tabs on right */
+
+/* Use page_action_buttons_on_hover.css to hide page-action-buttons to save more space for the address */
+
+/* Toolbars will be shown normally if window width goes below the value below */
+
+/* Modify it to suit your needs */
+@media screen and (min-width: 1400px) {
+  :root[proton][uidensity="compact"] {
+    --proton-tab-block-margin: 2px !important;
+  }
+
+  /* Modify these to change relative widths or default height */
+  #navigator-toolbox {
+    --uc-navigationbar-width: 25vw;
+    --uc-toolbar-height: 40px;
+    --uc-urlbar-min-width: 50vw; /* Can set minimum width for focused urlbar here eg. 550px */
+  }
+  /* prevent urlbar overflow on narrow windows */
+  /* Dependent on how many items are in navigation toolbar ADJUST AS NEEDED */
+  @media screen and (max-width: 1400px) {
+    #urlbar-container {
+      min-width: unset !important;
+    }
+  }
+
+  /* Override for other densities */
+  /* 34 w/o custom css*/
+  :root[uidensity="compact"] #navigator-toolbox {
+    --uc-toolbar-height: 30px;
+  }
+  :root[uidensity="touch"] #navigator-toolbox {
+    --uc-toolbar-height: 44px;
+  }
+
+  #TabsToolbar {
+    margin-left: var(--uc-navigationbar-width);
+    --tabs-navbar-shadow-size: 0px;
+  }
+  #tabbrowser-tabs {
+    --tab-min-height: calc(
+      var(--uc-toolbar-height) - 2 * var(--proton-tab-block-margin, 0px)
+    ) !important;
+  }
+
+  /* This isn't useful when tabs start in the middle of the window */
+  .titlebar-spacer[type="pre-tabs"] {
+    display: none;
+  }
+
+  #navigator-toolbox > #nav-bar {
+    margin-right: calc(100vw - var(--uc-navigationbar-width));
+    margin-top: calc(0px - var(--uc-toolbar-height));
+  }
+
+  /* Window drag space  */
+  :root[tabsintitlebar="true"] #nav-bar {
+    padding-left: 4px !important;
+  }
+
+  /* Rules specific to window controls on right layout */
+  @supports -moz-bool-pref("layout.css.osx-font-smoothing.enabled") {
+    .titlebar-buttonbox-container {
+      position: fixed;
+      display: block;
+      left: 0px;
+      z-index: 3;
+    }
+    :root[tabsintitlebar="true"] #nav-bar {
+      padding-left: 96px !important;
+      padding-right: 0px !important;
+    }
+  }
+
+  /* 1px margin on touch density causes tabs to be too high */
+  .tab-close-button {
+    margin-top: 0 !important;
+  }
+
+  /* Hide dropdown placeholder */
+  #urlbar-container:not(:hover) .urlbar-history-dropmarker {
+    margin-inline-start: -28px;
+  }
+  #urlbar-container:not(:focus) {
+    min-width: calc(var(--uc-navigationbar-width) * 0.65) !important;
+  }
+  #urlbar[usertyping] {
+    min-width: var(--uc-urlbar-min-width, none) !important;
+    z-index: 10 !important;
+  }
+  #nav-bar-customization-target, #PanelUI-button, #nav-bar-overflow-button, #TabsToolbar > .toolbar-items {
+    z-index: 0 !important;
+  }
+  /* hide colorful toolbar icons when --uc-urlbar-min-width not none */
+  #urlbar-container:not(:focus) ~ .toolbarbutton-1 {
+    visibility: visible;
+  }
+  #urlbar-container:focus-within ~ .toolbarbutton-1 {
+    visibility: collapse !important;
+  }
+
+  /* hide overflow indicator' separators*/
+  spacer[part="overflow-start-indicator"],
+  spacer[part="overflow-end-indicator"] {
+    border-image: linear-gradient(
+      black,
+      black calc(100% - 1px - var(--tabs-navbar-shadow-size)),
+      transparent calc(100% - 1px - var(--tabs-navbar-shadow-size))
+    ) !important;
+  }
+}
+/* Fix customization view */
+#customization-panelWrapper > .panel-arrowbox > .panel-arrow {
+  margin-inline-end: initial !important;
+}
